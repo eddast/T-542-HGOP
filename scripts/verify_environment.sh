@@ -56,9 +56,46 @@ if [[ $input == "Y" || $input == "y" ]]; then
         exit 1
     fi
     
-    ### TODO CHECK NODE
+    printf "\nChecking for presence and version of NodeJS...\n"
+    node_target_version="10.4.1"
+    if program_exists 'nodejs'; then
+        node_version=`node -v`
+        log_success "NodeJS version ${node_version} already installed"
+        printf "comparing version to target $node_target_version\n"
+        diff=`compare_versions ${node_version:1:10} $node_target_version`
+        if [[ $diff == 0 ]]; then
+            printf "NodeJS at target version $node_target_version\n"
+        else
+            printf "NodeJS not at target version $node_target_version. Upgrade now? (y/n): "
+            read input
+            if [[ $input == "Y" || $input == "y" ]]; then
+                install_nodejs "$node_target_version"
+                log_success "Successfully upgraded NodeJS to target version $node_target_version"
+            fi
+        fi
+    else
+        log_error "No installation of NodeJS was found"
+        printf "Do you wish to install NodeJS now? (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_nodejs "$node_target_version"
+            log_success "Successfully installed NodeJS to version $(node -v)"
+        fi
+    fi
 
-    ### TODO CHECK NPM
+    printf "\nChecking for presence and version of npm...\n"
+    if program_exists 'npm'; then
+        npm_version=`npm --version`
+        log_success "npm already installed at version ${npm_version}"
+    else
+        log_error "No installation of npm found"
+        printf "npm is installed alongside NodeJS do you wish to install NodeJS? (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_nodejs "$node_target_version"
+            log_success "Successfully installed NodeJS to version $(node -v)"
+        fi
+    fi
 
     ### TODO CHECK GIT
 
