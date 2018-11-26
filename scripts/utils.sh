@@ -112,3 +112,17 @@ install_nodejs() {
     run_cmd "sudo n $target_version"
     run_cmd "sudo ln -sf /usr/local/n/versions/node/$target_version/bin/node /usr/bin/node"
 }
+
+# Runs all appropriate commands to install NodeJS to it's target version
+# (Target version 2.17.0)
+install_git() {
+    printf "\nStarting installation of Git\n"
+    # Adds the latest git repository to the list of known apt repositories
+    run_cmd 'sudo apt-add-repository ppa:git-core/ppa'
+    # Updates the apt package lists to new packages
+    run_cmd 'sudo apt-get update'
+    # Fetches all new updates for apt packages
+    run_cmd 'sudo apt-get upgrade'
+    # Installs ubuntu-make on the system, -y forces yes
+    run_cmd 'sudo apt-get install git -y'
+}

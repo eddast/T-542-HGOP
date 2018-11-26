@@ -97,7 +97,34 @@ if [[ $input == "Y" || $input == "y" ]]; then
         fi
     fi
 
-    ### TODO CHECK GIT
+    printf "\nChecking for presence and version of Git...\n"
+    if program_exists 'git'; then
+        git_version=`git --version`
+        git_target_version="2.17.0"
+        log_success "${git_version} is already installed"
+        printf "Checking if version of Git is target version ($git_target_version)\n"
+        diff=`compare_versions ${git_version:12:10} ${git_target_version}`
+
+        if [ $diff -eq 2 ]; then
+            printf "Git version is not at target version ($git_target_version). Upgrade Git? (y/n): "
+            read git_input
+            if [[ $git_input == "Y" || $git_input == "y" ]]; then
+                install_git
+                log_success "Successfully updated git to $git_target_version"
+            fi
+        else
+            printf "Git is at target version $git_target_version\n"
+        fi
+
+    else
+        log_error "No installation of Git found"
+        printf "Do you wish to install Git now? (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_git
+            log_success "Successfully installed $(git --version)"
+        fi
+    fi
 
     ### TODO CHECK YARN
 
