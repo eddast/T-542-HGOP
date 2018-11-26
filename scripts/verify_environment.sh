@@ -13,12 +13,17 @@
 # A few commands are defined and imported from seperate script ./utils.sh for readability and clarity
 # The following commands are used from utils.sh:
 #   program_exists():   checks if a given program is installed to user computer
+#   run_cmd():          runs command and logs explicit error to error log file ./script-error.log on fail
 #   log_success():      logs to ./report.log and outputs to command line on success defined by green color
 #   log_error():        logs to ./report.log and outputs to command line on error defined by red color
 #   log():              logs to ./report.log and outputs to command line some neutral information
+#   compare_versions(): compares a parameter version to the version installed on user computer
+#   install_git():      runs all commands needed to install Git 
+#   install_nodejs():   runs all commands needed to install NodeJS (and NPM is installed as well subsequently)
+#   install_yarn():     runs all commands needed to install Yarn
 #   get_runtime():      calculates and logs to ./report.log total runtime script took
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-source "$DIR/utils.sh"
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+source "$dir/utils.sh"
 #########################################################################################################
 
 
@@ -37,12 +42,21 @@ read input
 
 # If user input was 'y' or 'Y' execute script
 if [[ $input == "Y" || $input == "y" ]]; then
+
+    # Get the current date and time in
+    #   human readable format
+    #   in ms since epoch (for script runtime)
     start_date="`date +%d/%m/%Y\ %H:%M:%S`"
     start=`echo $(($(date +%s%N)/1000000))`
+
+    # Log time when script starts execution
     log "\n========================================"
     log "[$start_date]: verification script started execution"
     printf "\n"
 
+    # Analyse whether operating system type of hardware is compatiable with script
+    # Meaning OS needs to be linux-gnu or darwin type
+    # If incompatible, log error and have script exit 
     printf "Checking your OS version for compatibility of this script...\n"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         log "OS: $(lsb_release -d | awk -F"\t" '{print $2}')"
@@ -56,16 +70,26 @@ if [[ $input == "Y" || $input == "y" ]]; then
         exit 1
     fi
     
+    # Check for presence and target version (currently 10.4.1) of NodeJS
+    # If user does not have NodeJS, offer to install NodeJS for user for convenience
+    # If user does not have NodeJS target verison offer them to upgrade for convenience
     printf "\nChecking for presence and version of NodeJS...\n"
     node_target_version="10.4.1"
     if program_exists 'nodejs'; then
+
+        # If user has NodeJS installed, log to logfile and output
         node_version=`node -v`
         log_success "NodeJS version ${node_version} already installed"
+
+        # Check if user has target version of NodeJS
         printf "comparing version to target $node_target_version\n"
         diff=`compare_versions ${node_version:1:10} $node_target_version`
         if [[ $diff == 0 ]]; then
+            # Target version already installed - inform user
             printf "NodeJS at target version $node_target_version\n"
         else
+            # If NodeJS version is not target version offer user to upgrade NodeJS
+            # Upgrade version if user inputs 'y' or 'Y'
             printf "NodeJS not at target version $node_target_version. Upgrade now? (y/n): "
             read input
             if [[ $input == "Y" || $input == "y" ]]; then
@@ -74,6 +98,9 @@ if [[ $input == "Y" || $input == "y" ]]; then
             fi
         fi
     else
+        # If NodeJS is not installed log this and output to user
+        # Offer user to install NodeJS on input 'y' or 'Y'
+        # Log in log file if user installs NodeJS
         log_error "No installation of NodeJS was found"
         printf "Do you wish to install NodeJS now? (y/n): "
         read input
@@ -83,29 +110,43 @@ if [[ $input == "Y" || $input == "y" ]]; then
         fi
     fi
 
+    # Check for presence and version of npm
     printf "\nChecking for presence and version of npm...\n"
     if program_exists 'npm'; then
         npm_version=`npm --version`
         log_success "npm already installed at version ${npm_version}"
     else
+        # If npm is not installed log this and output to user
+        # Offer user to install npm on input 'y' or 'Y'
+        # Log in log file if user installs npm
         log_error "No installation of npm found"
-        printf "npm is installed alongside NodeJS do you wish to install NodeJS? (y/n): "
+        printf "npm is installed alongside NodeJS\n"
+        printf "do you wish to install NodeJS? (y/n): "
         read input
         if [[ $input == "Y" || $input == "y" ]]; then
             install_nodejs "$node_target_version"
             log_success "Successfully installed NodeJS to version $(node -v)"
         fi
     fi
-
+    
+    # Check for presence and target version (currently 2.17.0) of Git
+    # If user does not have Git, offer to install Git for user for convenience
+    # If user does not have Git target verison offer them to upgrade for convenience
     printf "\nChecking for presence and version of Git...\n"
     if program_exists 'git'; then
+
+        # If user has Git installed, log to logfile and output
         git_version=`git --version`
         git_target_version="2.17.0"
         log_success "${git_version} is already installed"
+
+        # Check if user has target version of Git
         printf "Checking if version of Git is target version ($git_target_version)\n"
         diff=`compare_versions ${git_version:12:10} ${git_target_version}`
 
         if [ $diff -eq 2 ]; then
+            # If Git version is not target version offer user to upgrade Git
+            # Upgrade version if user inputs 'y' or 'Y'
             printf "Git version is not at target version ($git_target_version). Upgrade Git? (y/n): "
             read git_input
             if [[ $git_input == "Y" || $git_input == "y" ]]; then
@@ -113,10 +154,14 @@ if [[ $input == "Y" || $input == "y" ]]; then
                 log_success "Successfully updated git to $git_target_version"
             fi
         else
+            # Target version already installed - inform user
             printf "Git is at target version $git_target_version\n"
         fi
 
     else
+        # If Git is not installed log this and output to user
+        # Offer user to install Git on input 'y' or 'Y'
+        # Log in log file if user installs Git
         log_error "No installation of Git found"
         printf "Do you wish to install Git now? (y/n): "
         read input
@@ -126,11 +171,16 @@ if [[ $input == "Y" || $input == "y" ]]; then
         fi
     fi
 
+    # Check for presence and version of Yarn
+    # If user does not have Yarn, offer to install Yarn for user for convenience
     printf "\nChecking for presence and version of Yarn...\n"
     if program_exists 'yarn'; then
         yarn_version=`yarn --version`
         log_success "Yarn already installed at version ${yarn_version}"
     else
+        # If Yarn is not installed log this and output to user
+        # Offer user to install Yarn on input 'y' or 'Y'
+        # Log in log file if user installs Yarns
         log_error "No installation of Yarn found"
         printf "Do you wish to install Yarn now? (y/n): "
         read input
@@ -140,12 +190,21 @@ if [[ $input == "Y" || $input == "y" ]]; then
         fi
     fi
 
+    # Get the current date and time in
+    #   human readable format
+    #   in ms since epoch (for script runtime)
     end_date="`date +%d/%m/%Y\ %H:%M:%S`"
     end=`echo $(($(date +%s%N)/1000000))`
+
+    # Calculate the time the script took to run in ms
+    # Log and print script runtime
     ms=$((end-start))
     get_runtime $ms
+
+    # Log and output end time for script
     log "[$end_date]: Script stopped execution"
     log "========================================\n"
 else
+    # Exit script if user does not choose to execute script
     printf "${red}Environment verification script exiting\n\n${reset}"
 fi

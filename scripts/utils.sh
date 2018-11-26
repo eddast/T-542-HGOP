@@ -1,11 +1,26 @@
 #!/bin/bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+######################################################################################
+# UTILS.SH
+#   Helper functions and commands to aid functionality of
+#   ./verify_environment.sh script along with logging logic
+#######################################################################################
+
+
+# Variables for current directories and log files
+# Script report i.e. result of checks, installs and upgrading of programs are logged to ./report.log
+# Explicit error feedback when installation or upgrade for a program fails are logged to ./script-error.log
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 log_file="report.log"
 err_file="script-error.log"
+
+# Define color variables for more explicit output
 red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 
+# Checks if a program is already installed
+# $1 program name
 program_exists() {
     if [ $(type -P $1) ]; then
         return 0
@@ -14,37 +29,50 @@ program_exists() {
     fi
 }
 
+# Logs both to standard output and log file if check was successful
+# Uses green to indicate success
+# $1 message to log and output
 log_success() {
-    if [ ! -f "$DIR/$log_file" ]; then
-        $(touch $DIR/$log_file)
+    if [ ! -f "$dir/$log_file" ]; then
+        $(touch $dir/$log_file)
     fi
-    printf "${1}\n" >> "$DIR/$log_file"
+    printf "${1}\n" >> "$dir/$log_file"
     printf "${green}${1}${reset}\n"
 }
 
+# Logs both to standard output and log file if check was unsuccessful
+# Uses red to indicate error
+# $1 message to log and output
 log_error() {
-    if [ ! -f "$DIR/$log_file" ]; then
-        $(touch $DIR/$log_file)
+    if [ ! -f "$dir/$log_file" ]; then
+        $(touch $dir/$log_file)
     fi
-    printf "${1}\n" >> "$DIR/$log_file"
+    printf "${1}\n" >> "$dir/$log_file"
     printf "${red}${1}${reset}\n"
 }
 
+# Logs both to standard output (colorless) and log file some information
+# $1 message to log and output
 log() {
-    if [ ! -f "$DIR/$log_file" ]; then
-        $(touch $DIR/$log_file)
+    if [ ! -f "$dir/$log_file" ]; then
+        $(touch $dir/$log_file)
     fi
-    printf "${1}\n" >> "$DIR/$log_file"
+    printf "${1}\n" >> "$dir/$log_file"
     printf "${1}\n"
 }
 
+# Logs explicit error message from terminal output on error on install or upgrade of programs
+# Uses red to indicate error
+# $1 the error message
 log_upgrade_install_error() {
     if [ ! -f "$dir/$err_file" ]; then
-        $(touch ${err_file})
+        $(touch $dir/$err_file)
     fi
     printf "[At `date +%d/%m/%Y\ %H:%M:%S`]: ${1}\n" >> "$dir/$err_file"
 }
 
+# Runs a command and checks if it failed.
+# If the command failed it is logged to an error file ./script-error.log and outputted
 run_cmd() {
     output=$( $1 | tee /dev/tty)
     if [ $? -ne 0 ]; then
@@ -52,19 +80,7 @@ run_cmd() {
     fi
 }
 
-get_runtime() {
-    ms=$1
-    if (( $ms < 1000 )); then
-        log_success "The script took ${ms}ms to run"
-    else
-        sec=$((ms/1000))
-        seclength=${#sec}
-        secprecision=${ms:seclength:3}
-        secprecision="$(seq -f %03g $secprecision $secprecision)"
-        log "The script took ${sec}.${secprecision}s to run"
-    fi
-}
-
+# Compares if versions of programs are equal
 compare_versions() {
     if [[ $1 == $2 ]]; then
         echo 0
@@ -138,4 +154,19 @@ install_yarn() {
     run_cmd 'sudo apt-get update'
     # Installs the yarn package, -y forces install
     run_cmd 'sudo apt-get install yarn -y'
+}
+
+# Calculates script runtime by logging it and outputting either
+# in seconds or milliseconds depending on speed
+get_runtime() {
+    ms=$1
+    if (( $ms < 1000 )); then
+        log_success "The script took ${ms}ms to run"
+    else
+        sec=$((ms/1000))
+        seclength=${#sec}
+        secprecision=${ms:seclength:3}
+        secprecision="$(seq -f %03g $secprecision $secprecision)"
+        log "\nThe script took ${sec}.${secprecision}s to run"
+    fi
 }
