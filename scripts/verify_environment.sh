@@ -17,7 +17,8 @@
 #   log_error():        logs to ./report.log and outputs to command line on error defined by red color
 #   log():              logs to ./report.log and outputs to command line some neutral information
 #   get_runtime():      calculates and logs to ./report.log total runtime script took
-source "$(pwd)/utils.sh"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+source "$DIR/utils.sh"
 #########################################################################################################
 
 
@@ -42,7 +43,18 @@ if [[ $input == "Y" || $input == "y" ]]; then
     log "[$start_date]: verification script started execution"
     printf "\n"
 
-    ### TODO CHECK USER OS
+    printf "Checking your OS version for compatibility of this script...\n"
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        log "OS: $(lsb_release -d | awk -F"\t" '{print $2}')"
+        log_success "User OS is compatible for this script"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        log "OS: $(lsb_release -d | awk -F"\t" '{print $2}')"
+        log_success "User OS is compatible for this script"
+    else
+        log_error "OS is not supported for script: $OSTYPE"
+        log_error "Script exiting"
+        exit 1
+    fi
     
     ### TODO CHECK NODE
 

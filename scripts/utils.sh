@@ -1,5 +1,5 @@
 #!/bin/bash
-dir="$(pwd)"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 log_file="report.log"
 err_file="script-error.log"
 red=`tput setaf 1`
@@ -15,26 +15,26 @@ program_exists() {
 }
 
 log_success() {
-    if [ ! -f "$dir/$log_file" ]; then
-        $(touch ${log_file})
+    if [ ! -f "$DIR/$log_file" ]; then
+        $(touch $DIR/$log_file)
     fi
-    printf "${1}\n" >> "$dir/$log_file"
+    printf "${1}\n" >> "$DIR/$log_file"
     printf "${green}${1}${reset}\n"
 }
 
 log_error() {
-    if [ ! -f "$dir/$log_file" ]; then
-        $(touch ${log_file})
+    if [ ! -f "$DIR/$log_file" ]; then
+        $(touch $DIR/$log_file)
     fi
-    printf "${1}\n" >> "$dir/$log_file"
+    printf "${1}\n" >> "$DIR/$log_file"
     printf "${red}${1}${reset}\n"
 }
 
 log() {
-    if [ ! -f "$dir/$log_file" ]; then
-        $(touch ${log_file})
+    if [ ! -f "$DIR/$log_file" ]; then
+        $(touch $DIR/$log_file)
     fi
-    printf "${1}\n" >> "$dir/$log_file"
+    printf "${1}\n" >> "$DIR/$log_file"
     printf "${1}\n"
 }
 
