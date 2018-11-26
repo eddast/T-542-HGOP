@@ -1,0 +1,20 @@
+version: '3'
+services:
+  # Item repository image (the API)
+  my_item_repository:
+    image: eddast/hgop:part2
+    ports:
+    - '3000:3000'
+    depends_on:
+    - item_db_container
+    environment:
+      POSTGRES_DB: 'item_db'
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'root123'
+  # Postgres image to achieve functionality of API
+  item_db_container:
+    image: postgres
+    environment:
+      POSTGRES_DB: 'item_db'
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'root123'
