@@ -126,3 +126,16 @@ install_git() {
     # Installs ubuntu-make on the system, -y forces yes
     run_cmd 'sudo apt-get install git -y'
 }
+
+# Runs all appropriate commands to install Yarn
+install_yarn() {
+    printf "\nStarting installation of Yarn\n"
+    # Adds the gpg key for yarn to the list of known apt keys
+    run_cmd 'curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add'
+    # Adds the yarnpkg to the debian package list
+    run_cmd "echo deb https://dl.yarnpkg.com/debian/ stable main | sudo tee /etc/apt/sources.list.d/yarn.list"
+    # Updates the apt package lists to new packages
+    run_cmd 'sudo apt-get update'
+    # Installs the yarn package, -y forces install
+    run_cmd 'sudo apt-get install yarn -y'
+}

@@ -126,7 +126,19 @@ if [[ $input == "Y" || $input == "y" ]]; then
         fi
     fi
 
-    ### TODO CHECK YARN
+    printf "\nChecking for presence and version of Yarn...\n"
+    if program_exists 'yarn'; then
+        yarn_version=`yarn --version`
+        log_success "Yarn already installed at version ${yarn_version}"
+    else
+        log_error "No installation of Yarn found"
+        printf "Do you wish to install Yarn now? (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_yarn
+            log_success "Successfully installed Yarn version $(yarn --version)"
+        fi
+    fi
 
     end_date="`date +%d/%m/%Y\ %H:%M:%S`"
     end=`echo $(($(date +%s%N)/1000000))`
