@@ -48,9 +48,9 @@ function getClient() {
 }
 
 var client = getClient();
-// TODO: FIX
-// Added time out function - needed as workaround for when postgres connects after API
-// in which case error occurs
+// NOTE: Was having problems with concurrency, apparently "depends_on" in docker-compose did not always function as should
+// Added the following time out function as workaround to wait for postgres to start before client connects
+// Consulted this with lab instructor, he said this was OK and he said to keep the time out function here as is
 setTimeout(() =>
     client.connect((err) => {
         if (err) console.log('failed to connect to postgres!');
