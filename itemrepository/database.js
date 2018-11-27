@@ -9,14 +9,14 @@ module.exports = {
                 text: 'INSERT INTO Item(Name, InsertDate) VALUES($1, $2);',
                 values: [name, insertDate],
             }
-            client.query(query, () => {
+            client.query(query, (err, res) => {
                 onInsert();
                 client.end();
             });
         });
         return;
     },
-    getItems: (onGet) => {
+    getItems: onGet => {
         var client = getClient();
         client.connect(() => {
             const query = {
@@ -40,7 +40,7 @@ module.exports = {
 
 function getClient() {
     return new Client({
-        host: "your container name",
+        host: "item_db_container",
         user: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB
@@ -48,18 +48,19 @@ function getClient() {
 }
 
 var client = getClient();
-client.connect((err) => {
-    if (err) {
-        console.log('failed to connect to postgres!');
-    } else {
-        console.log('successfully connected to postgres!');
-        client.query('CREATE TABLE IF NOT EXISTS Item (ID SERIAL PRIMARY KEY, Name VARCHAR(32) NOT NULL, InsertDate TIMESTAMP NOT NULL);', (err) => {
-            if (err) {
-                console.log('error creating Item table!')
-            } else {
-                console.log('successfully created item table!')
-            }
-            client.end();
-        });
-    }
-});
+// TODO: FIX
+// Added time out function - needed as workaround for when postgres connects after API
+// in which case error occurs
+setTimeout(() =>
+    client.connect((err) => {
+        if (err) console.log('failed to connect to postgres!');
+        else {
+            console.log('successfully connected to postgres!');
+            client.query('CREATE TABLE IF NOT EXISTS Item (ID SERIAL PRIMARY KEY, Name VARCHAR(32) NOT NULL, InsertDate TIMESTAMP NOT NULL);', (err) => {
+                if (err) console.log('error creating Item table!');
+                else console.log('successfully created item table!');
+                client.end();
+            });
+        }
+    }),
+2000);

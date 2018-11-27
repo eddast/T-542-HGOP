@@ -8,7 +8,7 @@ app.get('/status', (req, res) => {
     res.send('The API is running!\n');
 });
 
-//api call to /items which returns a list of the the 10 newest item names.
+// api call to /items which returns a list of the the 10 newest item names.
 app.get('/items', (req, res) => {
     database.getItems(function (items){
         var names = items.map(x => x.name);
@@ -17,7 +17,7 @@ app.get('/items', (req, res) => {
     });
 });
 
-//api call to /items/name which inserts an item to database.
+// api call to /items/name which inserts an item to database.
 app.post('/items/:name', (req, res) => {
     var name = req.params.name;
     database.insertItem(name, new Date(), function() {
