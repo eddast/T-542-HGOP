@@ -172,6 +172,23 @@ install_docker() {
     run_cmd 'sudo apt-get install docker-ce -y'
 }
 
+install_aws_cli() {
+    printf "\nStarting installation of AWS Cli\n"
+    # Updates the apt package lists to new packages
+    run_cmd 'sudo apt-get update'
+    # Fetches all new updates for apt packages
+    run_cmd 'sudo apt-get upgrade'
+    # Get python 3 if user does not have it for pip
+    run_cmd 'sudo apt-get install python3'
+    # Install pip so that aws cli can be installed via pip
+    run_cmd 'sudo apt-get install python-pip'
+    # Finally install awscli via pip
+    run_cmd 'pip install awscli --upgrade --user'
+    # Link the aws executable to the path since it isn't added there by default
+    home=$(echo ~)
+    run_cmd "sudo cp $home/.local/bin/aws /usr/local/bin"
+}
+
 # Calculates script runtime by logging it and outputting either
 # in seconds or milliseconds depending on speed
 get_runtime() {

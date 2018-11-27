@@ -22,6 +22,7 @@
 #   install_nodejs():   runs all commands needed to install NodeJS (and NPM is installed as well subsequently)
 #   install_yarn():     runs all commands needed to install Yarn
 #   install_docker()    runs all commands needed to install Docker
+#   install_aws_cli()   runs all commands needed to install AWS Cli
 #   get_runtime():      calculates and logs to ./report.log total runtime script took
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source "$dir/utils.sh"
@@ -206,6 +207,25 @@ if [[ $input == "Y" || $input == "y" ]]; then
         if [[ $input == "Y" || $input == "y" ]]; then
             install_docker
             log_success "Successfully installed $(docker --version)"
+        fi
+    fi
+
+    # Check for presence and version of AWS Cli
+    printf "\nChecking for presence and version of AWS Cli...\n"
+    if program_exists 'aws'; then
+        aws_cli_version=`aws --version`
+        log_success "AWS Cli ${aws_cli_version} already installed"
+    else
+        # If Docker is not installed log this and output to user
+        # Offer user to install Docker on input 'y' or 'Y'
+        # Log in log file if user installs Docker
+        log_error "No installation of AWS Cli found"
+        printf "Do you wish to install AWS Cli now?\n"
+        printf "NOTE: python and pip will be installed in the process if not present (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_aws_cli
+            log_success "Successfully installed AWS CLi $(aws --version)"
         fi
     fi
 
