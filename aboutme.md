@@ -1,6 +1,9 @@
-# TODO
-## Name
-## Where you grew up
-## Education and employment history
-## What kind of a software person are you?
-## What do you expect to get from this course?
+# Who am I?
+
+I'm Edda Steinunn Rúnarsdóttir and I'm currently finishing my last semester (and my last course!). I grew up in the shadows of Breiðholt but I have been living Mosfellsbær since I was a teenager.
+
+I majored in languages and sciences at Menntaskólinn við Hamrahlíð, then once I graduated I decided to apply for Spanish at University of Iceland and for Computer Science at Reykjavík University. When accepted to both fields, I flipped a coin for my fate and here I am -- finishing up my BSc here at Reykjavík University. I am eternally thankful to that coin for enabling me to find my passion for programming, which is specifically web development. I've had a taste of experience working in web development; I started by working one summer at Össur in a web development team where I was maintaining and developing their global network of websites and I currently work part time in web- and app development for Landsbankinn where I will work full-time after graduation.
+
+What kind of a software person am I? That's a vague question. I choose Visual Studio Code over any editor always, I use a 10-year-old Mac (definately not by choice) decorated with awfully geeky GitHub and Data stickers and I favor C++ and JavaScript over all other programming languages. I betting that says enough!
+
+I expect to get lessons on quality assurance in practise from this course as I find that to be the important field of knowledge that I lack perhaps the most in software development. I'm unfamiliar with good practises when it comes to the deployment pipeline and software delivery and I want to use my last chance in school to remedy that so that I can be a better employee and so that I can be better informed on what delivers good software quality and delivery, thus be a better, more powerful employee on the job market.
