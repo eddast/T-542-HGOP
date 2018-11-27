@@ -21,6 +21,7 @@
 #   install_git():      runs all commands needed to install Git 
 #   install_nodejs():   runs all commands needed to install NodeJS (and NPM is installed as well subsequently)
 #   install_yarn():     runs all commands needed to install Yarn
+#   install_docker()    runs all commands needed to install Docker
 #   get_runtime():      calculates and logs to ./report.log total runtime script took
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source "$dir/utils.sh"
@@ -180,13 +181,31 @@ if [[ $input == "Y" || $input == "y" ]]; then
     else
         # If Yarn is not installed log this and output to user
         # Offer user to install Yarn on input 'y' or 'Y'
-        # Log in log file if user installs Yarns
+        # Log in log file if user installs Yarn
         log_error "No installation of Yarn found"
         printf "Do you wish to install Yarn now? (y/n): "
         read input
         if [[ $input == "Y" || $input == "y" ]]; then
             install_yarn
             log_success "Successfully installed Yarn version $(yarn --version)"
+        fi
+    fi
+
+    # Check for presence and version of Docker
+    printf "\nChecking for presence and version of Docker...\n"
+    if program_exists 'docker'; then
+        docker_version=`docker --version`
+        log_success "${docker_version} already installed"
+    else
+        # If Docker is not installed log this and output to user
+        # Offer user to install Docker on input 'y' or 'Y'
+        # Log in log file if user installs Docker
+        log_error "No installation of Docker found"
+        printf "Do you wish to install Docker now? (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_docker
+            log_success "Successfully installed $(docker --version)"
         fi
     fi
 

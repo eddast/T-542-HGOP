@@ -156,6 +156,22 @@ install_yarn() {
     run_cmd 'sudo apt-get install yarn -y'
 }
 
+install_docker() {
+    printf "\nStarting installation of Docker\n"
+    # Installs all the dependencies that docker requires
+    run_cmd 'sudo apt-get install apt-transport-https curl ca-certificates software-properties-common -y'
+    # Adds the gpg key for docker to the list of known apt keys
+    run_cmd 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add'
+    # Adds the repository for docker to the system
+    run_cmd "sudo add-apt-repository deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    # Updates the apt package lists to new packages
+    run_cmd 'sudo apt-get update'
+    # Fetches all new updates for apt packages
+    run_cmd 'sudo apt-get upgrade'
+    # Installs ubuntu-make on the system, -y forces yes
+    run_cmd 'sudo apt-get install docker-ce -y'
+}
+
 # Calculates script runtime by logging it and outputting either
 # in seconds or milliseconds depending on speed
 get_runtime() {
