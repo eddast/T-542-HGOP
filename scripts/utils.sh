@@ -12,7 +12,6 @@
 # Explicit error feedback when installation or upgrade for a program fails are logged to ./script-error.log
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 log_file="report.log"
-err_file="script-error.log"
 
 # Define color variables for more explicit output
 red=`tput setaf 1`
@@ -61,22 +60,12 @@ log() {
     printf "${1}\n"
 }
 
-# Logs explicit error message from terminal output on error on install or upgrade of programs
-# Uses red to indicate error
-# $1 the error message
-log_upgrade_install_error() {
-    if [ ! -f "$dir/$err_file" ]; then
-        $(touch $dir/$err_file)
-    fi
-    printf "[At `date +%d/%m/%Y\ %H:%M:%S`]: ${1}\n" >> "$dir/$err_file"
-}
-
 # Runs a command and checks if it failed.
-# If the command failed it is logged to an error file ./script-error.log and outputted
+# If the command failed it is logged and outputted
 run_cmd() {
     output=$( $1 | tee /dev/tty)
     if [ $? -ne 0 ]; then
-        log_upgrade_install_error "$output\n\n"
+        log_error "$output\n\n"
     fi
 }
 
