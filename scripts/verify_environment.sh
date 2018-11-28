@@ -234,7 +234,7 @@ if [[ $input == "Y" || $input == "y" ]]; then
     printf "\nChecking for presence and version of Terraform...\n"
     if program_exists 'terraform'; then
         terraform_version=`terraform --version`
-        log_success "Terraform version ${terraform_version} already installed"
+        log_success "${terraform_version} already installed"
     else
         # If Terraform is not installed log this and output to user
         # Offer user to install Terraform on input 'y' or 'Y'
@@ -245,7 +245,7 @@ if [[ $input == "Y" || $input == "y" ]]; then
         read input
         if [[ $input == "Y" || $input == "y" ]]; then
             install_terraform
-            log_success "Successfully installed Terraform version $(terraform --version)"
+            log_success "Successfully installed $(terraform --version)"
         fi
     fi
 
