@@ -23,6 +23,7 @@
 #   install_yarn():     runs all commands needed to install Yarn
 #   install_docker()    runs all commands needed to install Docker
 #   install_aws_cli()   runs all commands needed to install AWS Cli
+#   install_terraform() runs all commands needed to install Terraform
 #   get_runtime():      calculates and logs to ./report.log total runtime script took
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source "$dir/utils.sh"

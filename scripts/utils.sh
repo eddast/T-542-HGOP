@@ -156,6 +156,7 @@ install_yarn() {
     run_cmd 'sudo apt-get install yarn -y'
 }
 
+# Runs all appropriate commands to install Docker
 install_docker() {
     printf "\nStarting installation of Docker\n"
     # Installs all the dependencies that docker requires
@@ -172,6 +173,7 @@ install_docker() {
     run_cmd 'sudo apt-get install docker-ce -y'
 }
 
+# Runs all appropriate commands to install AWS Cli
 install_aws_cli() {
     printf "\nStarting installation of AWS Cli\n"
     # Updates the apt package lists to new packages
@@ -189,6 +191,7 @@ install_aws_cli() {
     run_cmd "sudo cp $home/.local/bin/aws /usr/local/bin"
 }
 
+# Runs all appropriate commands to install Terraform
 install_terraform() {
     printf "\nStarting installation of Terraform\n"
     # Updates the apt package lists to new packages
