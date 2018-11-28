@@ -189,6 +189,24 @@ install_aws_cli() {
     run_cmd "sudo cp $home/.local/bin/aws /usr/local/bin"
 }
 
+install_terraform() {
+    printf "\nStarting installation of Terraform\n"
+    # Updates the apt package lists to new packages
+    run_cmd 'sudo apt-get update'
+    # Fetches all new updates for apt packages
+    run_cmd 'sudo apt-get upgrade'
+    # Get unzip if user does not have it to unzip files
+    run_cmd 'sudo apt-get install unzip'
+    # Get zip file for latest version of terraform
+    run_cmd 'wget https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip'
+    # Unzip zip file gotten from that
+    run_cmd 'unzip terraform_0.11.10_linux_amd64.zip'
+    # Link the executable to the path (not done by default)
+    run_cmd 'sudo mv terraform /usr/local/bin/'
+    # remove zip file
+    run_cmd 'rm terraform_0.11.10_linux_amd64.zip'
+}
+
 # Calculates script runtime by logging it and outputting either
 # in seconds or milliseconds depending on speed
 get_runtime() {
