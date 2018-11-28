@@ -8,11 +8,21 @@
 
 printf "[STARTED DEPLOYING NEW TERRAFORM INSTANCE...]\n"
 
+## CHECK FOR NECESSARY FILES
+
 # Check if infrastructure file exist
 # if not output error and we cannot deploy
 if [ ! -f "infrastructure.tf" ]; then
     printf "ERROR: infrastructure.tf not present in current directory, cannot deploy\n"
     printf "Make sure you run deploy script within correct directory and infrastructure.tf file is present\n"
+    exit 1
+fi
+
+# Check if docker compose file exist
+# if not output error and we cannot deploy
+if [ ! -f "docker-compose.yml" ]; then
+    printf "ERROR: docker-compose.yml not present in current directory, cannot deploy\n"
+    printf "Make sure you run deploy script within correct directory and docker-compose.yml file is present\n"
     exit 1
 fi
 
