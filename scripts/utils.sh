@@ -12,7 +12,6 @@
 # Explicit error feedback when installation or upgrade for a program fails are logged to ./script-error.log
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 log_file="report.log"
-err_file="script-error.log"
 
 # Define color variables for more explicit output
 red=`tput setaf 1`
@@ -61,22 +60,12 @@ log() {
     printf "${1}\n"
 }
 
-# Logs explicit error message from terminal output on error on install or upgrade of programs
-# Uses red to indicate error
-# $1 the error message
-log_upgrade_install_error() {
-    if [ ! -f "$dir/$err_file" ]; then
-        $(touch $dir/$err_file)
-    fi
-    printf "[At `date +%d/%m/%Y\ %H:%M:%S`]: ${1}\n" >> "$dir/$err_file"
-}
-
 # Runs a command and checks if it failed.
-# If the command failed it is logged to an error file ./script-error.log and outputted
+# If the command failed it is logged and outputted
 run_cmd() {
     output=$( $1 | tee /dev/tty)
     if [ $? -ne 0 ]; then
-        log_upgrade_install_error "$output\n\n"
+        log_error "$output\n\n"
     fi
 }
 
@@ -156,6 +145,7 @@ install_yarn() {
     run_cmd 'sudo apt-get install yarn -y'
 }
 
+# Runs all appropriate commands to install Docker
 install_docker() {
     printf "\nStarting installation of Docker\n"
     # Installs all the dependencies that docker requires
@@ -172,6 +162,7 @@ install_docker() {
     run_cmd 'sudo apt-get install docker-ce -y'
 }
 
+# Runs all appropriate commands to install AWS Cli
 install_aws_cli() {
     printf "\nStarting installation of AWS Cli\n"
     # Updates the apt package lists to new packages
@@ -187,6 +178,25 @@ install_aws_cli() {
     # Link the aws executable to the path since it isn't added there by default
     home=$(echo ~)
     run_cmd "sudo cp $home/.local/bin/aws /usr/local/bin"
+}
+
+# Runs all appropriate commands to install Terraform
+install_terraform() {
+    printf "\nStarting installation of Terraform\n"
+    # Updates the apt package lists to new packages
+    run_cmd 'sudo apt-get update'
+    # Fetches all new updates for apt packages
+    run_cmd 'sudo apt-get upgrade'
+    # Get unzip if user does not have it to unzip files
+    run_cmd 'sudo apt-get install unzip'
+    # Get zip file for latest version of terraform
+    run_cmd 'wget https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip'
+    # Unzip zip file gotten from that
+    run_cmd 'unzip terraform_0.11.10_linux_amd64.zip'
+    # Link the executable to the path (not done by default)
+    run_cmd 'sudo mv terraform /usr/local/bin/'
+    # remove zip file
+    run_cmd 'rm terraform_0.11.10_linux_amd64.zip'
 }
 
 # Calculates script runtime by logging it and outputting either

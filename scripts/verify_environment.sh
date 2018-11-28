@@ -23,6 +23,7 @@
 #   install_yarn():     runs all commands needed to install Yarn
 #   install_docker()    runs all commands needed to install Docker
 #   install_aws_cli()   runs all commands needed to install AWS Cli
+#   install_terraform() runs all commands needed to install Terraform
 #   get_runtime():      calculates and logs to ./report.log total runtime script took
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source "$dir/utils.sh"
@@ -216,9 +217,9 @@ if [[ $input == "Y" || $input == "y" ]]; then
         aws_cli_version=`aws --version`
         log_success "AWS Cli ${aws_cli_version} already installed"
     else
-        # If Docker is not installed log this and output to user
-        # Offer user to install Docker on input 'y' or 'Y'
-        # Log in log file if user installs Docker
+        # If AWS Cli is not installed log this and output to user
+        # Offer user to install AWS Cli on input 'y' or 'Y'
+        # Log in log file if user installs AWS Cli
         log_error "No installation of AWS Cli found"
         printf "Do you wish to install AWS Cli now?\n"
         printf "NOTE: python and pip will be installed in the process if not present (y/n): "
@@ -226,6 +227,25 @@ if [[ $input == "Y" || $input == "y" ]]; then
         if [[ $input == "Y" || $input == "y" ]]; then
             install_aws_cli
             log_success "Successfully installed AWS CLi $(aws --version)"
+        fi
+    fi
+
+    # Check for presence and version of Terraform
+    printf "\nChecking for presence and version of Terraform...\n"
+    if program_exists 'terraform'; then
+        terraform_version=`terraform --version`
+        log_success "${terraform_version} already installed"
+    else
+        # If Terraform is not installed log this and output to user
+        # Offer user to install Terraform on input 'y' or 'Y'
+        # Log in log file if user installs Terraform
+        log_error "No installation of Terraform found"
+        printf "Do you wish to install Terraform now?\n"
+        printf "NOTE: unzip will be installed in the process if not present (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_terraform
+            log_success "Successfully installed $(terraform --version)"
         fi
     fi
 
