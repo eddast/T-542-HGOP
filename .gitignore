@@ -1,6 +1,6 @@
 # A generic gitignore file
 
-exercises/
+# Build/obj/env files
 *.swp
 *.*~
 project.lock.json
@@ -39,4 +39,10 @@ node_modules/
 # Visual Studio 2015
 .vs/
 
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Log files
 *.log
