@@ -162,6 +162,17 @@ install_docker() {
     run_cmd 'sudo apt-get install docker-ce -y'
 }
 
+install_docker_compose() {
+    printf "\nStarting installation of Docker Compose\n"
+    kernel_name=$(uname -s)
+    machine_hardware_name=$(uname -m)
+    # Downloads docker compose dependency version from git and places to usr/local/bin
+    run_cmd "sudo curl -L https://github.com/docker/compose/releases/download/1.23.1/docker-compose-${kernel_name}-${machine_hardware_name} -o /usr/local/bin/docker-compose"
+    # Get access rights to docker compose command
+    run_cmd 'sudo chmod +x /usr/local/bin/docker-compose'
+}
+
+
 # Runs all appropriate commands to install AWS Cli
 install_aws_cli() {
     printf "\nStarting installation of AWS Cli\n"

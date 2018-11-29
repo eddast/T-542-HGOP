@@ -211,10 +211,28 @@ if [[ $input == "Y" || $input == "y" ]]; then
         fi
     fi
 
+    # Check for presence and version of Docker Compose
+    printf "\nChecking for presence and version of Docker Compose...\n"
+    if program_exists 'docker-compose'; then
+        docker_compose_version=`docker-compose --version`
+        log_success "${docker_compose_version} already installed"
+    else
+        # If Docker is not installed log this and output to user
+        # Offer user to install Docker on input 'y' or 'Y'
+        # Log in log file if user installs Docker
+        log_error "No installation of Docker Compose found"
+        printf "Do you wish to install Docker Compose now? (y/n): "
+        read input
+        if [[ $input == "Y" || $input == "y" ]]; then
+            install_docker_compose
+            log_success "Successfully installed $(docker-compose --version)"
+        fi
+    fi
+
     # Check for presence and version of AWS Cli
     printf "\nChecking for presence and version of AWS Cli...\n"
     if program_exists 'aws'; then
-        aws_cli_version=`aws --version`
+        aws_cli_version=`aws --version 2>&1`
         log_success "AWS Cli ${aws_cli_version} already installed"
     else
         # If AWS Cli is not installed log this and output to user
@@ -234,6 +252,7 @@ if [[ $input == "Y" || $input == "y" ]]; then
     printf "\nChecking for presence and version of Terraform...\n"
     if program_exists 'terraform'; then
         terraform_version=`terraform --version`
+        terraform_version=`echo $terraform_version`
         log_success "${terraform_version} already installed"
     else
         # If Terraform is not installed log this and output to user
