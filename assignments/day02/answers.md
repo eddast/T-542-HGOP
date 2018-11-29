@@ -11,9 +11,9 @@ A tool that allows developers to create, run and deploy applications. Docker cre
 
 A *Virtual Machine* is a software that emulates the behaviour of another computer in it's entirety, e.g. software providing full functionality of another physical computer running on your computer.
 
-A *Docker container* however is an executable of a runnable Docker image, i.e. it is a software that bundles up application code and dependencies so the application runs across computer environments but does not provide full functionality of a computer, only of the application itself. 
+A *Docker container* however is an executable of a runnable Docker image, i.e. it is a software that bundles up application code and dependencies so the application runs across computer environments but does not provide full functionality of a computer, only of the application itself. Main difference between containers and virtual machines is that containers virtualize the operating system instead of hardware, making them more portable and efficient.
 
-A *Docker Image* is a completely built application with required dependencies and is built from the instructions for a complete and executable version of an application. The image is then used to execute code in a Docker container.
+A *Docker Image* is a lightweight, stand-alone completely built application with all required dependencies and is built from the instructions for a complete and executable version of an application. The image includes the code, runtime, system tools, system libraries as well as all settings of the application. The image is then used to execute code in a Docker container.
 
 ## Web API?
 A programmable interface that can be interacted with over a network to retrieve data, manipulate data or achieve some sort of desired functionality. The communication with web APIs are conducted via HTTP.
