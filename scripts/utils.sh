@@ -69,39 +69,6 @@ run_cmd() {
     fi
 }
 
-# Compares if versions of programs are equal
-compare_versions() {
-    if [[ $1 == $2 ]]; then
-        echo 0
-        return
-    fi
-    local i ver1=($1) ver2=($2)
-    # fill empty fields in ver1 with zeros
-    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
-    do
-        ver1[i]=0
-    done
-    for ((i=0; i<${#ver1[@]}; i++))
-    do
-        if [[ -z ${ver2[i]} ]]
-        then
-            # fill empty fields in ver2 with zeros
-            ver2[i]=0
-        fi
-        if [[ ${ver1:$i:1} -ge ${ver2:$i:1} ]]
-        then
-            echo 1
-            return
-        fi
-        if [[ ${ver1:$i:1} -le ${ver2:$i:1} ]]
-        then
-            echo 2
-            return
-        fi
-    done
-    echo 0
-}
-
 # Runs all appropriate commands to install NodeJS to it's target version
 # (Target version 10.4.1)
 install_nodejs() {

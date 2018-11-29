@@ -36,7 +36,7 @@ source "$dir/utils.sh"
 # Output user OS information
 printf "\nHello, $USER.\n"
 printf "This script will check the versions for your necessary dependencies\n"
-printf "And will offer you to install and/or upgrade a dependency if not installed or up-to-date\n"
+printf "And will offer you to install a dependency if not already installed\n"
 printf "OS: $(lsb_release -d | awk -F"\t" '{print $2}')\n\n"
 
 # Prompt user to execute script and read user input
@@ -84,22 +84,6 @@ if [[ $input == "Y" || $input == "y" ]]; then
         node_version=`node -v`
         log_success "NodeJS version ${node_version} already installed"
 
-        # Check if user has target version of NodeJS
-        printf "comparing version to target $node_target_version\n"
-        diff=`compare_versions ${node_version:1:10} $node_target_version`
-        if [[ $diff == 0 ]]; then
-            # Target version already installed - inform user
-            printf "NodeJS at target version $node_target_version\n"
-        else
-            # If NodeJS version is not target version offer user to upgrade NodeJS
-            # Upgrade version if user inputs 'y' or 'Y'
-            printf "NodeJS not at target version $node_target_version. Upgrade now? (y/n): "
-            read input
-            if [[ $input == "Y" || $input == "y" ]]; then
-                install_nodejs "$node_target_version"
-                log_success "Successfully upgraded NodeJS to target version $node_target_version"
-            fi
-        fi
     else
         # If NodeJS is not installed log this and output to user
         # Offer user to install NodeJS on input 'y' or 'Y'
@@ -142,25 +126,6 @@ if [[ $input == "Y" || $input == "y" ]]; then
         git_version=`git --version`
         git_target_version="2.17.0"
         log_success "${git_version} is already installed"
-
-        # Check if user has target version of Git
-        printf "Checking if version of Git is target version ($git_target_version)\n"
-        diff=`compare_versions ${git_version:12:10} ${git_target_version}`
-
-        if [ $diff -eq 2 ]; then
-            # If Git version is not target version offer user to upgrade Git
-            # Upgrade version if user inputs 'y' or 'Y'
-            printf "Git version is not at target version ($git_target_version). Upgrade Git? (y/n): "
-            read git_input
-            if [[ $git_input == "Y" || $git_input == "y" ]]; then
-                install_git
-                log_success "Successfully updated git to $git_target_version"
-            fi
-        else
-            # Target version already installed - inform user
-            printf "Git is at target version $git_target_version\n"
-        fi
-
     else
         # If Git is not installed log this and output to user
         # Offer user to install Git on input 'y' or 'Y'
@@ -232,6 +197,7 @@ if [[ $input == "Y" || $input == "y" ]]; then
     # Check for presence and version of AWS Cli
     printf "\nChecking for presence and version of AWS Cli...\n"
     if program_exists 'aws'; then
+        # Redirect the aws --version output to stdout since it was being set strangely
         aws_cli_version=`aws --version 2>&1`
         log_success "AWS Cli ${aws_cli_version} already installed"
     else
