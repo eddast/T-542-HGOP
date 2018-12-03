@@ -6,19 +6,28 @@ const deckConstructor = require('./deck.js');
 const dealerConstructor = require('./dealer.js');
 const lucky21Constructor = require('./lucky21.js');
 
+/***********************
+ * TEST INITIALIZATION *
+ ***********************/
+
 test('a new game should have 50 cards left in the deck', () => {
   let deck = deckConstructor();
   let dealer = dealerConstructor();
   let game = lucky21Constructor(deck, dealer);
-  expect(game.deck.length).toEqual(50);
+  expect(game.state.deck.length).toEqual(50);
 });
 
 test('a new game should have 2 drawn cards', () => {
   let deck = deckConstructor();
   let dealer = dealerConstructor();
   let game = lucky21Constructor(deck, dealer);
-  expect(game.cards.length).toEqual(2);
+  expect(game.state.cards.length).toEqual(2);
 });
+
+
+/**********************
+ * TEST FUNCTIONALITY *
+ **********************/
 
 test('guess21OrUnder should draw the next card', () => {
   // Arrange
@@ -32,8 +41,8 @@ test('guess21OrUnder should draw the next card', () => {
   game.guess21OrUnder(game, dealer);
   
   // Assert
-  expect(game.cards.length).toEqual(3);
-  expect(game.cards[2]).toEqual('01D');
+  expect(game.state.cards.length).toEqual(3);
+  expect(game.state.cards[2]).toEqual('01D');
 });
 
 // TODO: At least 20 unit tests
