@@ -7,20 +7,14 @@ const dealerConstructor = require('./dealer.js');
 const lucky21Constructor = require('./lucky21.js');
 
 test('a new game should have 50 cards left in the deck', () => {
-  // Arrange
   let deck = deckConstructor();
   let dealer = dealerConstructor();
   let game = lucky21Constructor(deck, dealer);
-
-  // Assert
   expect(game.deck.length).toEqual(50);
 });
 
 test('a new game should have 2 drawn cards', () => {
-  // Arrange
   let game = lucky21Constructor(deck, dealer);
-
-  // Assert
   expect(game.cards.length).toEqual(2);
 });
 
