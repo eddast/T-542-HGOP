@@ -14,6 +14,8 @@ test('a new game should have 50 cards left in the deck', () => {
 });
 
 test('a new game should have 2 drawn cards', () => {
+  let deck = deckConstructor();
+  let dealer = dealerConstructor();
   let game = lucky21Constructor(deck, dealer);
   expect(game.cards.length).toEqual(2);
 });
