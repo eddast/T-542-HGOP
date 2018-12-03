@@ -5,10 +5,10 @@
   *     Drawing card from game deck
   * @return object containing shuffle and draw functions
   */
- const dealerFunctionality = () => {
+ module.exports = () => {
     return {
         /**
-         * Shuffles deck
+         * Shuffles the given deck
          * @param {string[]} deck to shuffle
          */
         shuffle: deck => {
@@ -27,6 +27,3 @@
         draw: deck => deck.pop(),
     };
 };
-
-// Export the functionality of the lucky21 game
-module.exports = dealerFunctionality;
