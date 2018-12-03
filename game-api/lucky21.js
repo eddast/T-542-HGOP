@@ -27,6 +27,7 @@ const lucky21Functionality = (deck, dealer) => {
     };
     
     return {
+        // Game state
         state: state,
 
         // Is the game over (true or false).
@@ -58,6 +59,8 @@ const lucky21Functionality = (deck, dealer) => {
         },
         // Player action (void).
         guess21OrUnder: game => {
+            let drawnCard = dealer.draw(deck);
+            game.state.cards.push(drawnCard);
             // TODO
         },
         // Player action (void).
