@@ -1,3 +1,7 @@
+ /**
+ * The deck for lucky21 game
+ * represents cards in a deck in the form of a string array
+ */
 module.exports = () => {
     return [
       '01H', '02H', '03H', '04H', '05H', '06H', '07H', '08H', '09H', '10H', '11H', '12H', '13H', // Hearts
