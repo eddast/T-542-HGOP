@@ -55,18 +55,26 @@ describe('test game initialization', () => {
 describe('isGameOver functionality', () => {
   test('isGameOver player looses after guessing 21 or under when cards array is 20 and next card is 3', () => {
     const game = initializeLucky21Game();
-    game.state.deck = ['3H'];
-    game.state.cards = ['01H', '12H', '9H'];
+    game.state.deck = [ '3H' ];
+    game.state.cards = [ '01H', '12H', '9H' ];
     expect(game.isGameOver(game)).toEqual(false);
     game.guess21OrUnder(game);
     expect(game.isGameOver(game)).toEqual(true);
   });
-  test('isGameOver player does not loose after guessing over 21 when cards array is 20 and next card is 3', () => {
+  test('isGameOver player wins after guessing over 21 when cards array is 20 and next card is 3 which concludes game', () => {
     const game = initializeLucky21Game();
-    game.state.deck = ['3H'];
-    game.state.cards = ['01H', '12H', '9H'];
+    game.state.deck = [ '3H' ];
+    game.state.cards = [ '01H', '12H', '09H' ];
     expect(game.isGameOver(game)).toEqual(false);
     game.guessOver21(game);
+    expect(game.isGameOver(game)).toEqual(true);
+  });
+  test('isGameOver game is still ongoing if player guesses 21 or under when cards array is 15 and next card is 3', () => {
+    const game = initializeLucky21Game();
+    game.state.deck = [ '3H' ];
+    game.state.cards = [ '01H', '04H' ];
+    expect(game.isGameOver(game)).toEqual(false);
+    game.guess21OrUnder(game);
     expect(game.isGameOver(game)).toEqual(false);
   });
 });
