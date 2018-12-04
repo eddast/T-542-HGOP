@@ -17,4 +17,10 @@ node {
         sh "git clean -dfxq"
         sh "git stash"
     }
+    /**
+    * Setup step - installs required dependencies for application
+    */
+    stage("Setup") {
+        sh "npm install game-api/"
+    }
 }
