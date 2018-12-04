@@ -21,4 +21,10 @@ node {
     stage("Setup") {
         npm install game-api/
     }
+    /**
+    * Lint step - checks if code conforms to eslint configured rules
+    */
+    stage("Lint") {
+       npm run eslint --prefix game-api
+    }
 }

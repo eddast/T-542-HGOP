@@ -20,7 +20,7 @@ const getInitialGameState = (dealer, deck) => {
         cards: [ card0, card1 ],
         card: undefined,
     };
-};
+}
 /**
  * Helper function to determine if card is ace based on numeric value of card
  * @param {int} cardVal the numeric value of card (1-13)
