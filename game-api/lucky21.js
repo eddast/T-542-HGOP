@@ -53,9 +53,20 @@ module.exports = (deck, dealer) => {
         isGameOver: game => {
             // TODO
         },
-        // Has the player won (true or false).
+        /**
+         * Checks if player won game. Player has won under two circumstances:
+         *  Player just guessed 21 or under and total went up to 21
+         *  Player just guessed over 21 and total went over 21
+         * @param game the game along with game state
+         * @return {boolean} true if player has won the game, false otherwise
+         */
         playerWon: game => {
-            // TODO
+            return (
+                // If card is undefined player just guessed 21 or under
+                (game.state.card === undefined && game.getTotal(game) === 21) ||
+                // If card is not undefined player just guessed over 21
+                (game.state.card !== undefined && game.getTotal(game) > 21)
+            );
         },
         /**
          * Gets the value of cards currently drawn by user
