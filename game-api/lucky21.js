@@ -87,9 +87,14 @@ module.exports = (deck, dealer) => {
             game.state.card = undefined;
             game.state.cards.push(nextCard);
         },
-        // Player action (void).
+        /**
+         * Player guesses 21 or over
+         * Then we use the card value as indication player guessed over 21
+         * @param game the game along with game state
+         */
         guessOver21: game => {
-            // TODO
+            const nextCard = dealer.draw(deck);
+            game.state.card = nextCard;
         },
         
     };
