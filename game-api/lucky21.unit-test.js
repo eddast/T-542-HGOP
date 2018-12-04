@@ -76,10 +76,9 @@ describe('isGameOver functionality', () => {
     game.state.deck = [ '3H' ];
     game.state.cards = [ '01H', '04H' ];
     expect(game.isGameOver(game)).toEqual(false);
-    console.log(game.isGameOver(game));
     game.guess21OrUnder(game);
+    console.log(game.getTotal(game));
     expect(game.isGameOver(game)).toEqual(false);
-    console.log(game.isGameOver(game));
   });
 });
 /** playerWon **/
