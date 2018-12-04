@@ -13,15 +13,13 @@ node {
     * Setup step - installs required dependencies for application
     */
     stage("Setup") {
-        sh "cd game-api/"
-        sh "npm install"
+        sh "cd game-api/ && npm install"
     }
     /**
     * Lint step - checks if code conforms to eslint configured rules
     */
     stage("Lint") {
-        sh "cd game-api/"
-        sh "npm run eslint"
+        sh "cd game-api/ && npm run eslint"
     }
     /**
     * Build step - builds binaries and artifacts (docker image) and pushes to artifact repository
