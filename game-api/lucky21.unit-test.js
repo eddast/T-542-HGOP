@@ -36,10 +36,12 @@ const initializeGameWithDeckSubsetAndNoShuffle = () => {
  * TEST GAME INITIALIZATION *
  ****************************/
 describe('test game initialization', () => {
+  // Following test was given in lab description
   test('a new game should have 50 cards left in the deck', () => {
     const game = initializeLucky21Game();
     expect(game.state.deck.length).toEqual(50);
   });
+  // Following test was given in lab description
   test('a new game should have 2 drawn cards', () => {
     const game = initializeLucky21Game();
     expect(game.state.cards.length).toEqual(2);
@@ -187,6 +189,7 @@ describe('getCard functionality', () => {
 
 /** guess21OrUnder **/
 describe('guess21OrUnder functionality', () => {
+  // Following test was given in lab description
   test('guess21OrUnder should draw the next card', () => {
     const game = initializeGameWithDeckSubsetAndNoShuffle();
     game.guess21OrUnder(game);
