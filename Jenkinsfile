@@ -28,4 +28,10 @@ node {
         sh "./scripts/docker_build.sh ${git.GIT_COMMIT}"
         sh "./scripts/docker_push.sh ${git.GIT_COMMIT}"
     }
+    /**
+    * Test step - runs unit tests for the game-api
+    */
+    stage("Test") {
+        sh "cd game-api/ && npm run test:unit"
+    }
 }
