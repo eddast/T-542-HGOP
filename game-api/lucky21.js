@@ -1,6 +1,7 @@
 /********************
  * HELPER FUNCTIONS *
  ********************/
+
 /**
  * Helper function to set and get initial game state
  * Game state has deck, drawn cards, current card and dealer
@@ -37,6 +38,7 @@ const cardIsRoyal = cardVal => cardVal > 10;
 /*******************************
  * LUCKY 21 GAME FUNCTIONALITY *
  *******************************/
+
 /**
  * The functionality of a lucky21 game
  * @param {string[]} deck represents cards in a deck in a string array
@@ -49,9 +51,23 @@ module.exports = (deck, dealer) => {
          * Includes deck, dealer, cards array and card
          */
         state: getInitialGameState(dealer, deck),
-        // Is the game over (true or false).
+        /**
+         * Checks if game is ongoing. It's ongoing if player has won or lost.
+         * Player has lost under two circumstances:
+         *  Player just guessed 21 or under and total went over 21
+         *  Player just guessed over 21 and total went to 21 or under
+         * @param game the game along with game state
+         * @return {boolean} true if player has lost the game, false otherwise
+         */
         isGameOver: game => {
-            // TODO
+            return (
+                // Game is over if player won
+                (game.playerWon(game)) ||
+                // If card is undefined player just guessed 21 or under
+                (game.state.card === undefined && game.getTotal(game) > 21) ||
+                // If card is not undefined player just guessed over 21
+                (game.state.card !== undefined && game.getTotal(game) <= 21)
+            );
         },
         /**
          * Checks if player won game. Player has won under two circumstances:
@@ -155,6 +171,5 @@ module.exports = (deck, dealer) => {
             const nextCard = dealer.draw(deck);
             game.state.card = nextCard;
         },
-        
     };
 };
