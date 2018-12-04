@@ -33,6 +33,9 @@ At the due date for application in the first week (30.11.2018) the following is 
 ```
 <a name="w1-running-instance"></a>
 ### The Running Instance of the API
+
+**UPDATE 04.12.2018 at 21:28**: Instance terminated as per assignment description to week 2 day 3.
+
 The running instance of the API is up at the public IP address **52.91.240.77**. This means that the following terminal command (or navigating to 52.91.240.77:3000/status in browser):
 ```bash
 $ curl 52.91.240.77:3000/status
