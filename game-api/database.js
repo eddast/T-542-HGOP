@@ -3,12 +3,12 @@ const { Client } = require('pg');
 // export available database functions.
 module.exports = {
     insertItem: (name, insertDate, onInsert) => {
-        var client = getClient();
+        const client = getClient();
         client.connect(() => {
             const query = {
                 text: 'INSERT INTO Item(Name, InsertDate) VALUES($1, $2);',
                 values: [name, insertDate],
-            }
+            };
             client.query(query, (err, res) => {
                 onInsert();
                 client.end();
@@ -17,26 +17,26 @@ module.exports = {
         return;
     },
     getItems: onGet => {
-        var client = getClient();
+        const client = getClient();
         client.connect(() => {
             const query = {
                 text: 'SELECT ID, Name, InsertDate FROM Item ORDER BY InsertDate DESC LIMIT 10;',
                 rowMode: 'array'
-            }
+            };
             client.query(query, (err, res) => {
                 onGet(res.rows.map(row => {
                     return {
                         id: row[0],
                         name: row[1],
                         insertdate: row[2]
-                    }
+                    };
                 }));
                 client.end();
             });
         });
         return;
     }
-}
+};
 
 function getClient() {
     return new Client({
@@ -47,7 +47,7 @@ function getClient() {
     });
 }
 
-var client = getClient();
+const client = getClient();
 // NOTE: I was having problems with concurrency, apparently "depends_on" in docker-compose did not always function as should
 // Added the following time out function as workaround to wait for postgres to start before client connects
 // Consulted this with lab instructor, he said this was OK and he said to keep the time out function here as is

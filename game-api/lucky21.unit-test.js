@@ -17,7 +17,7 @@ const initializeLucky21Game = () => {
   const deck = deckConstructor();
   const dealer = dealerConstructor();
   return lucky21Constructor(deck, dealer);
-}
+};
 /**
 * Initialize known test environment
 * Sets up subset of a deck with four cards and disables shuffling
@@ -29,7 +29,7 @@ const initializeGameWithDeckSubsetAndNoShuffle = () => {
   deck = ['05L', '01D', '09S', '10H'];
   dealer.shuffle = deck => { /* Override the shuffle to do nothing */ };
   return lucky21Constructor(deck, dealer);
-}
+};
 
 
 /****************************
