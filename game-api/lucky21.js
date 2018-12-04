@@ -72,10 +72,12 @@ module.exports = (deck, dealer) => {
         getCards: game => {
             // TODO
         },
-        // The player's card (string or undefined).
-        getCard: game => {
-            // TODO
-        },
+        /**
+         * Gets player's current card just drawn
+         * @param game the game along with game state
+         * @returns {string} value corresponding to card in card deck
+         */
+        getCard: game => game.state.card,
         /**
          * Player guesses 21 or under
          * Then we add to card array
