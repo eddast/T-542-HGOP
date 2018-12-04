@@ -68,10 +68,12 @@ module.exports = (deck, dealer) => {
         getTotal: game => {
             // TODO
         },
-        // The player's cards (array of strings).
-        getCards: game => {
-            // TODO
-        },
+        /**
+         * Gets player's cards that have been drawn in game
+         * @param game the game along with game state
+         * @returns {string[]} array corresponding to drawn cards in game
+         */
+        getCards: game => game.state.cards,
         /**
          * Gets player's current card just drawn
          * @param game the game along with game state
