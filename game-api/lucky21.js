@@ -57,9 +57,32 @@ module.exports = (deck, dealer) => {
         playerWon: game => {
             // TODO
         },
-        // The highest score the cards can yield without going over 21 (integer).
+        /**
+         * Gets the value of cards currently drawn by user
+         * Determines aces either as 11 or 1 s.t. total cards value does not exceed 21
+         * @param game the game along with game state
+         * @return {int} sum of the value of all cards in cards array
+         */
         getCardsValue: game => {
-            // TODO
+            let cards = game.state.cards.slice();
+            // Sort in reverse such that aces appear last in cards array
+            // Necessary to determine whether to calculate them as 1 or 11
+            cards = cards.sort().reverse();
+            let cardsValue = 0;
+            for( let i = 0; i < cards.length; i++ ) {
+                const card = cards[i];
+                let cardVal = parseInt(card.substring(0,2));
+                // Determine whether ace goes over 21 as 11
+                // If so set to 11, otherwise it takes the value of 1
+                if (cardIsAce(cardVal)) {
+                    if(cardsValue + 11 <= 21) cardVal = 11;
+                    else cardVal = 1;
+                }
+                // Jack, Queen and King have value of 10
+                else if (cardIsRoyal(cardVal)) cardVal = 10;
+                cardsValue += cardVal;
+            }
+            return cardsValue;
         },
         /**
          * Gets value from the game state's card
