@@ -1,14 +1,6 @@
 
 node {
     def git = checkout scm
-    
-    /**
-    * Build step - builds binaries and artifacts (docker image) and pushes to artifact repository
-    */
-    stage("Build") {
-        sh "./scripts/docker_build.sh ${git.GIT_COMMIT}"
-        sh "./scripts/docker_push.sh ${git.GIT_COMMIT}"
-    }
     /**
     * Clean step - keeps files from git repository but removes everything else from workspace
     */
@@ -22,5 +14,12 @@ node {
     */
     stage("Setup") {
         sh "npm install game-api/"
+    }
+    /**
+    * Build step - builds binaries and artifacts (docker image) and pushes to artifact repository
+    */
+    stage("Build") {
+        sh "./scripts/docker_build.sh ${git.GIT_COMMIT}"
+        sh "./scripts/docker_push.sh ${git.GIT_COMMIT}"
     }
 }
