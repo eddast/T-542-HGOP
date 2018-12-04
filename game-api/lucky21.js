@@ -61,9 +61,24 @@ module.exports = (deck, dealer) => {
         getCardsValue: game => {
             // TODO
         },
-        // The value of the card that should exceed 21 if it exists (integer or undefined).
+        /**
+         * Gets value from the game state's card
+         * RULE #1: Card does not exist (undefined), e.g. user guessed 21 or under, return undefined
+         * RULE #2: If card value is J, Q or K the card value is 10
+         * RULE #3: If card value is ace, we want it to be favorable to user
+         *          Which has guessed card to yield total over 21 so 11 is returned
+         * RULE #4: Any other card corresponds to it's numeric value (2-10)
+         * @param game the game along with game state
+         * @return {int|undefined} value for card variable of the game state
+         */
         getCardValue: game => {
-            // TODO
+            const { card } = game.state;
+            if (card === undefined) return card;
+            // Extract value of card (1-13)
+            const cardValue = parseInt(card.substring(0,2));
+            if (cardIsRoyal(cardValue)) return 10; 
+            if (cardIsAce(cardValue))   return 11;
+            return cardValue;
         },
         getTotal: game => {
             // TODO
