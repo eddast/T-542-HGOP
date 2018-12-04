@@ -1,35 +1,54 @@
-/****************************************************
- * IMPLEMENTS FUNCTIONALITY OF THE GAME LUCKY 21    *
- * Simple card game based on just these rules:      *
- * Guess either if card is 21 or less or over 21    *
- ****************************************************/
-
+/********************
+ * HELPER FUNCTIONS *
+ ********************/
 /**
- * The functionality of a lucky21 game
+ * Helper function to set and get initial game state
+ * Game state has deck, drawn cards, current card and dealer
+ * Shuffle deck and then draw two cards initially and place in drawn cards
  * @param {string[]} deck represents the values of cards in a deck in the form of a string array
  * @param {*} dealer the functionality of a dealer: provides suffle and draw a card functionalities
+ * @return initial state for a lucky21 game
  */
-const lucky21Functionality = (deck, dealer) => {
-
-    // Shuffle deck to randomize the deck array
+const getInitialGameState = (dealer, deck) => {
     dealer.shuffle(deck);
-
-    // Let dealer draw two cards initially
     let card0 = dealer.draw(deck);
     let card1 = dealer.draw(deck);
-
-    // Set initial game state
-    let state = {
+    return {
         deck: deck,
         dealer: dealer,
         cards: [ card0, card1 ],
         card: undefined,
     };
-    
-    return {
-        // Game state
-        state: state,
+}
+/**
+ * Helper function to determine if card is ace based on numeric value of card
+ * @param {int} cardVal the numeric value of card (1-13)
+ * @return {boolean} true if card is ace
+ */
+const cardIsAce = cardVal => cardVal === 1;
+/**
+ * Helper function to determine if card is Jack, Queen or King based on numeric value of card
+ * @param {int} cardVal the numeric value of card (1-13)
+ * @return {boolean} true if card is ace
+ */
+const cardIsRoyal = cardVal => cardVal > 10;
 
+
+/*******************************
+ * LUCKY 21 GAME FUNCTIONALITY *
+ *******************************/
+/**
+ * The functionality of a lucky21 game
+ * @param {string[]} deck represents cards in a deck in a string array
+ * @param {*} dealer the functionality of a dealer: provides suffle and draw a card functionalities
+ */
+module.exports = (deck, dealer) => {
+    return {
+        /**
+         * The game state object
+         * Includes deck, dealer, cards array and card
+         */
+        state: getInitialGameState(dealer, deck),
         // Is the game over (true or false).
         isGameOver: game => {
             // TODO
@@ -59,16 +78,12 @@ const lucky21Functionality = (deck, dealer) => {
         },
         // Player action (void).
         guess21OrUnder: game => {
-            let drawnCard = dealer.draw(deck);
-            game.state.cards.push(drawnCard);
             // TODO
         },
         // Player action (void).
         guessOver21: game => {
             // TODO
         },
+        
     };
 };
-
-// Export the functionality of the lucky21 game
-module.exports = lucky21Functionality;
