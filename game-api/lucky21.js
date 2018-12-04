@@ -76,9 +76,16 @@ module.exports = (deck, dealer) => {
         getCard: game => {
             // TODO
         },
-        // Player action (void).
+        /**
+         * Player guesses 21 or under
+         * Then we add to card array
+         * Set card value to undefined as indication player guessed 21 or under
+         * @param game the game along with game state
+         */
         guess21OrUnder: game => {
-            // TODO
+            const nextCard = dealer.draw(deck);
+            game.state.card = undefined;
+            game.state.cards.push(nextCard);
         },
         // Player action (void).
         guessOver21: game => {
