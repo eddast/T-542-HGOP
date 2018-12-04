@@ -103,8 +103,14 @@ module.exports = (deck, dealer) => {
             if (cardIsAce(cardValue))   return 11;
             return cardValue;
         },
+        /**
+         * Calculates total value for all cards in deck as well as guessed card over 21 (if it exists)
+         * @param game the game along with game state
+         * @return {int} total value for all cards in deck as well as guessed card over 21 (if it exists)
+         */
         getTotal: game => {
-            // TODO
+            if ( game.getCardValue(game) === undefined) return game.getCardsValue(game);
+            return game.getCardsValue(game) + game.getCardValue(game);
         },
         /**
          * Gets player's cards that have been drawn in game
