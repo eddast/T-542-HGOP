@@ -45,7 +45,6 @@ const cardIsRoyal = cardVal => cardVal > 10;
  * @param {*} dealer the functionality of a dealer: provides suffle and draw a card functionalities
  */
 module.exports = (context) => {
-
     /**
      * Get deck and dealer from context file
      */

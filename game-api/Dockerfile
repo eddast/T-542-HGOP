@@ -4,10 +4,8 @@ FROM node:dubnium
 # Configure the working directory within the container
 WORKDIR /code
 
-# Copy following local files to container, necessary to run application
-COPY package.json package.json
-COPY database.js database.js
-COPY app.js app.js
+# Copy all local repository files to container, necessary to run application
+COPY . .
 
 # Runs npm install command to install application dependencies
 RUN npm install

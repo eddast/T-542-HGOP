@@ -1,10 +1,8 @@
 /**
  * Has functionality to return a random integer from some range
  */
-module.exports = function(context) {
+module.exports = function() {
     return {
-        randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);
-        },
+        randomInt: (min, max) => Math.floor(Math.random() * (max - min) + min),
     };
 };
