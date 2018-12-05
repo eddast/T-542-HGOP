@@ -4,6 +4,7 @@
 const deckConstructor = require('./deck.js');
 const dealerConstructor = require('./dealer.js');
 const lucky21Constructor = require('./lucky21.js');
+const randomConstructor = require('./random.js');
 
 
 /********************
@@ -14,9 +15,12 @@ const lucky21Constructor = require('./lucky21.js');
 * @return lucky21 game object
 */
 const initializeLucky21Game = () => {
-  const deck = deckConstructor();
-  const dealer = dealerConstructor();
-  return lucky21Constructor(deck, dealer);
+  let dependencies = {
+    'deck': deckConstructor,
+    'dealer': dealerConstructor,
+    'random': randomConstructor(),
+  };
+  return lucky21Constructor((name) => dependencies[name]);
 };
 /**
 * Initialize known test environment
@@ -24,11 +28,17 @@ const initializeLucky21Game = () => {
 * @return lucky21 game object
 */
 const initializeGameWithDeckSubsetAndNoShuffle = () => {
-  const dealer = dealerConstructor();
-  let deck = deckConstructor();
-  deck = ['05L', '01D', '09S', '10H'];
-  dealer.shuffle = deck => { /* Override the shuffle to do nothing */ };
-  return lucky21Constructor(deck, dealer);
+  dealerNoShuffleConstructor = () => ({
+    shuffle: () => {/* DO NOTHING */},
+    draw: (deck) => deck.pop(),
+  });
+
+  let dependencies = {
+    'deck': () => ['05L', '01D', '09S', '10H'],
+    'dealer': dealerNoShuffleConstructor,
+    'random': randomConstructor(),
+  };
+  return lucky21Constructor((name) => dependencies[name]);
 };
 
 
@@ -57,15 +67,15 @@ describe('test game initialization', () => {
 describe('isGameOver functionality', () => {
   test('isGameOver player looses after guessing 21 or under when cards array is 20 and next card is 3', () => {
     const game = initializeLucky21Game();
-    game.state.deck = [ '3H' ];
-    game.state.cards = [ '01H', '12H', '9H' ];
+    game.state.deck = [ '03H' ];
+    game.state.cards = [ '01H', '12H', '09H' ];
     expect(game.isGameOver(game)).toEqual(false);
     game.guess21OrUnder(game);
     expect(game.isGameOver(game)).toEqual(true);
   });
   test('isGameOver player wins after guessing over 21 when cards array is 20 and next card is 3 which concludes game', () => {
     const game = initializeLucky21Game();
-    game.state.deck = [ '3H' ];
+    game.state.deck = [ '03H' ];
     game.state.cards = [ '01H', '12H', '09H' ];
     expect(game.isGameOver(game)).toEqual(false);
     game.guessOver21(game);
@@ -73,7 +83,7 @@ describe('isGameOver functionality', () => {
   });
   test('isGameOver game is still ongoing if player guesses 21 or under when cards array is 15 and next card is 3', () => {
     const game = initializeLucky21Game();
-    game.state.deck = [ '3H' ];
+    game.state.deck = [ '03H' ];
     game.state.cards = [ '01H', '04H' ];
     expect(game.isGameOver(game)).toEqual(false);
     game.guess21OrUnder(game);
@@ -85,7 +95,7 @@ describe('isGameOver functionality', () => {
 describe('playerWon functionality', () => {
   test('playerWon player wins after guessing over 21 when cards array is 20 and next card is 3', () => {
     const game = initializeLucky21Game();
-    game.state.deck = ['3H'];
+    game.state.deck = ['03H'];
     game.state.cards = ['01H', '12H', '09H'];
     expect(game.playerWon(game)).toEqual(false);
     game.guessOver21(game);
@@ -93,7 +103,7 @@ describe('playerWon functionality', () => {
   });
   test('playerWon player does not win after guessing under 21 when cards array is 10 and next card is 3', () => {
     const game = initializeLucky21Game();
-    game.state.deck = ['3H'];
+    game.state.deck = ['03H'];
     game.state.cards = ['04H', '06H'];
     expect(game.playerWon(game)).toEqual(false);
     game.guessOver21(game);
@@ -110,7 +120,7 @@ describe('getCardsValue functionality', () => {
   });
   test('getCardsValue returns 20 instead of 30 given Queen, 9 and ace (favors user in terms of ace)', () => {
     const game = initializeLucky21Game();
-    game.state.cards = ['12H', '9H', '01H'];
+    game.state.cards = ['12H', '09H', '01H'];
     expect(game.getCardsValue(game)).toEqual(20);
   });
   test('getCardsValue returns 14 given all aces (only first one evaluated to 11, latter aces to 1)', () => {
@@ -163,7 +173,7 @@ describe('getTotal functionality', () => {
   });
   test('getTotal returns 31 given cards ace, Queen and 9 and ace as card', () => {
     const game = initializeLucky21Game();
-    game.state.cards = ['01H', '12H', '9H'];
+    game.state.cards = ['01H', '12H', '09H'];
     game.state.card = '01C';
     expect(game.getTotal(game)).toEqual(31);
   });
