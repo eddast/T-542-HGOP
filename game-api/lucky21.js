@@ -179,5 +179,14 @@ module.exports = (context) => {
             const nextCard = dealer.draw(deck);
             game.state.card = nextCard;
         },
+        /**
+         * Returns the state of the game
+         */
+        getState: game => {
+            return {
+                cards: game.state.cards,
+                card: game.state.card
+            }
+        }
     };
 };
