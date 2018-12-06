@@ -7,6 +7,8 @@ Course repository for the Quality Assurance Course at Reykjavík University fall
   * [Implementation Details Explained](#w1-implementation-details)
   
 - [Week Two](#w2)
+  * [The Running Instance of the API](#w2-running-instance)
+  * [The Running Jenkins Instance](#w2-jenkins-instance)
 
 <a name="w1"></a>
 ## Week One
@@ -77,4 +79,77 @@ setTimeout(() =>
 
 <a name="w2"></a>
 ## Week Two
-TODO
+At the due date for application in the second week (7.12.2018) the following is an overview of the folder structure and files that are up on the master branch (deviations are marked with '*' and explained below).
+
+```bash
+├── game-api
+│   ├── .eslintrc.json
+│   ├── app.js
+│   ├── server.js
+│   ├── config.js
+│   ├── random.js
+│   ├── random.unit-test.js
+│   ├── deck.js
+│   ├── deck.unit-test.js
+│   ├── dealer.js
+│   ├── dealer.unit-test.js
+│   ├── lucky21.js
+│   ├── lucky21.unit-test.js
+│   ├── inject.js
+│   ├── context.js
+│   ├── database.js
+│   ├── Dockerfile
+│   └── package.json
+│   └── package-lock.json*
+│   └── jest.config.js*
+├── assignments
+│   ├── day01
+│   │   └── answers.md
+│   └── day02
+│       └── answers.md
+├── scripts
+│   ├── initialize_game_api_instance.sh
+│   ├── verify_environment.sh
+│   ├── docker_compose_up.sh
+│   ├── docker_build.sh
+│   ├── docker_push.sh
+│   ├── sync_session.sh
+│   └── deploy.sh
+│   └── utils.sh*
+├── docker-compose.yml
+├── infrastructure.tf
+├── Jenkinsfile
+└── aboutme.md
+└── README.md
+```
+
+The package-lock.json file although not specified in assignment description is present in my version control system because it is intended to checked into source control for dependency installation efficiency purposes and other tracability reasons. This was consulted with lab instructor which said this was a correct assumption. The jest.config.js file is present although not specified in assignment description to have jest test configuration separate from package.json file for possible future extensibility on test configuration.  This was consulted with lab instructor which said this was fine. Finally, refer to section [Implementation Details Explained](#w1-implementation-details) in [Week One](#w1) section for explaination on why utils.sh script file is present although not specified in assignment description.
+
+<a name="w2-running-instance"></a>
+### The Running Instance of the API
+
+The running instance of the API is up at the public IP address **TODO**. This means that the following terminal command (or navigating to TODO:3000/status in browser):
+```bash
+$ curl TODO:3000/status
+```
+Interacts with my running build instance of my API hosted by AWS cloud services of the application delivered for week one, and yields the following output:
+
+```bash
+The API is running!
+```
+Which verifies that my application instance is up and running. One can also perform the following actions and get responses based on the current functionality implementation of the Lucky21 game:
+
+```bash
+$ curl -X POST TODO:3000/start
+$ curl -X POST TODO:3000/stats
+$ curl TODO:3000/state
+$ curl -X POST TODO:3000/start
+$ curl -X POST TODO:3000/guess21OrUnder
+$ curl -X POST TODO:3000/guessOver21
+```
+
+<a name="w2-jenkins-instance"></a>
+### The Running Jenkins Instance
+The URL to my running Jenkins Instance which currently manages and audits the deployment pipeline of this repository is http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/. Lab instructors should have been provided with a user to access this Jenkins instance through submission comment when this repository URL was handed in to Canvas.
+
+**NOTE:** If you are relevant to the management of the course T-542-HGOP and you require a user access to the Jenkins instance as well for grading purposes or otherwise, please specify your reasons and contact the author of this repository via email: eddasr15@ru.is to request a user to the Jenkins instance.

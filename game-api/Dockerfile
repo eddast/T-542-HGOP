@@ -5,10 +5,11 @@ FROM node:dubnium
 WORKDIR /code
 
 # Copy all local repository files to container, necessary to run application
+# TODO ekki unit-test.js
 COPY . .
 
 # Runs npm install command to install application dependencies
-RUN npm install
+RUN npm install --production
 
 # Start application within container using nodeJS image
 # (There can only be one CMD per Dockerfile, used specifically to run application) 

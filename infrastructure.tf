@@ -39,7 +39,7 @@ resource "aws_security_group" "game_security_group" {
 resource "aws_instance" "game_server" {
   ami                    = "ami-0ac019f4fcb7cb7e6"
   instance_type          = "t2.micro"
-  key_name               = "GameKeyPair2"
+  key_name               = "GameKeyPair"
   vpc_security_group_ids = ["${aws_security_group.game_security_group.id}"]
   tags {
     Name = "GameServer"
@@ -55,7 +55,7 @@ resource "aws_instance" "game_server" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = "${file("~/.aws/GameKeyPair2.pem")}"
+      private_key = "${file("~/.aws/GameKeyPair.pem")}"
     }
   }
 
@@ -69,7 +69,7 @@ resource "aws_instance" "game_server" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = "${file("~/.aws/GameKeyPair2.pem")}"
+      private_key = "${file("~/.aws/GameKeyPair.pem")}"
     }
   }
 
@@ -82,7 +82,7 @@ resource "aws_instance" "game_server" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = "${file("~/.aws/GameKeyPair2.pem")}"
+      private_key = "${file("~/.aws/GameKeyPair.pem")}"
     }
   }
 
@@ -103,7 +103,7 @@ resource "aws_instance" "game_server" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = "${file("~/.aws/GameKeyPair2.pem")}"
+      private_key = "${file("~/.aws/GameKeyPair.pem")}"
     }
   }
 }
