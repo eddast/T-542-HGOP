@@ -133,7 +133,7 @@ The running instance of the API is up at the public IP address **TODO**. This me
 ```bash
 $ curl TODO:3000/status
 ```
-Interacts with my running build instance of my API hosted by AWS cloud services of the application delivered for week one, and yields the following output:
+Interacts with my running build instance of my API hosted by AWS cloud services of the application delivered for week two, and yields the following output:
 
 ```bash
 The API is running!
@@ -141,9 +141,10 @@ The API is running!
 Which verifies that my application instance is up and running. One can also perform the following actions and get responses based on the current functionality implementation of the Lucky21 game:
 
 ```bash
+$ curl TODO:3000/status
+$ curl TODO:3000/state
 $ curl -X POST TODO:3000/start
 $ curl -X POST TODO:3000/stats
-$ curl TODO:3000/state
 $ curl -X POST TODO:3000/start
 $ curl -X POST TODO:3000/guess21OrUnder
 $ curl -X POST TODO:3000/guessOver21
