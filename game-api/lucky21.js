@@ -186,7 +186,7 @@ module.exports = (context) => {
             return {
                 cards: game.state.cards,
                 card: game.state.card
-            }
+            };
         }
     };
 };

@@ -72,7 +72,7 @@ module.exports = function(context) {
             res.statusCode = 200;
             res.send(game.getState(game));
         } else {
-            const msg = 'Game not started'
+            const msg = 'Game not started';
             res.statusCode = 204;
             res.send(msg);
         }
@@ -82,7 +82,7 @@ module.exports = function(context) {
     app.post('/guess21OrUnder', (req, res) => {
         if (game) {
             if (game.isGameOver(game)) {
-                const msg = 'Game is already over'
+                const msg = 'Game is already over';
                 res.statusCode = 403;
                 res.send(msg);
             } else {
@@ -101,7 +101,7 @@ module.exports = function(context) {
                 res.send(game.getState(game));
             }
         } else {
-            const msg = 'Game not started'
+            const msg = 'Game not started';
             res.statusCode = 204;
             res.send(msg);
         }
@@ -111,7 +111,7 @@ module.exports = function(context) {
     app.post('/guessOver21', (req, res) => {
         if (game) {
             if (game.isGameOver(game)) {
-                const msg = 'Game is already over'
+                const msg = 'Game is already over';
                 res.statusCode = 403;
                 res.send(msg);
             } else {
@@ -130,7 +130,7 @@ module.exports = function(context) {
                 res.send(game.getState(game));
             }
         } else {
-            const msg = 'Game not started'
+            const msg = 'Game not started';
             res.statusCode = 204;
             res.send(msg);
         }
@@ -144,4 +144,4 @@ module.exports = function(context) {
             });
         }
     };
-}
+};
