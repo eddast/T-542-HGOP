@@ -99,9 +99,10 @@ At the due date for application in the second week (7.12.2018) the following is 
 │   ├── context.js
 │   ├── database.js
 │   ├── Dockerfile
-│   └── package.json
+│   ├── .dockerignore*
+│   ├── jest.config.js*
+│   ├── package.json
 │   └── package-lock.json*
-│   └── jest.config.js*
 ├── assignments
 │   ├── day01
 │   │   └── answers.md
@@ -123,7 +124,7 @@ At the due date for application in the second week (7.12.2018) the following is 
 └── README.md
 ```
 
-The package-lock.json file although not specified in assignment description is present in my version control system because it is intended to checked into source control for dependency installation efficiency purposes and other tracability reasons. This was consulted with lab instructor which said this was a correct assumption. The jest.config.js file is present although not specified in assignment description to have jest test configuration separate from package.json file for possible future extensibility on test configuration.  This was consulted with lab instructor which said this was fine. Finally, refer to section [Implementation Details Explained](#w1-implementation-details) in [Week One](#w1) section for explaination on why utils.sh script file is present although not specified in assignment description.
+The package-lock.json file although not specified in assignment description is present in my version control system because it is intended to checked into source control for dependency installation efficiency purposes and other tracability reasons. This was consulted with lab instructor which said this was a correct assumption. The jest.config.js file is present although not specified in assignment description to have jest test configuration separate from package.json file for possible future extensibility on test configuration.  This was consulted with lab instructor which said this was fine. The .dockerignore file is present although not specified in assignment description to manage which files are not copied into the docker image when copying necessary files to artifact repository when building the docker image. Finally, refer to section [Implementation Details Explained](#w1-implementation-details) in [Week One](#w1) section for explaination on why utils.sh script file is present although not specified in assignment description.
 
 <a name="w2-running-instance"></a>
 ### The Running Instance of the API

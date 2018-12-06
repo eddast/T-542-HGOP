@@ -5,7 +5,8 @@ FROM node:dubnium
 WORKDIR /code
 
 # Copy all local repository files to container, necessary to run application
-# TODO ekki unit-test.js
+# Copy command omits the files specified in .dockerignore file
+# (e.g. unit tests, config files, node modules and such)
 COPY . .
 
 # Runs npm install command to install application dependencies

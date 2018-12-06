@@ -1,0 +1,5 @@
+# Docker ignores the following files when copying files to docker image
+./*.unit-test.js
+./jest.config.js
+./.eslintrc.json
+./node_modules
