@@ -20,7 +20,7 @@ const initializeLucky21Game = () => {
     'dealer': dealerConstructor,
     'random': randomConstructor(),
   };
-  return lucky21Constructor((name) => dependencies[name])
+  return lucky21Constructor((name) => dependencies[name]);
 };
 /**
 * Initialize known test environment
