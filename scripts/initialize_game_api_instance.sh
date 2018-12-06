@@ -28,6 +28,3 @@ if [ ! -f "docker-compose.yml" ]; then
     printf "ERROR: docker-compose.yml not present, cannot initialize new instance\n"
     exit 1
 fi
-
-echo 'Starting the API'
-sudo docker-compose up -d

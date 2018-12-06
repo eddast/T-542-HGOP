@@ -75,5 +75,6 @@ setTimeout(() =>
 
  This was consulted with lab instructor (Hrafn Orri Hrafnkelsson) who ensured that having this workaround in the code was OK and to keep the time-out function in the code as is.
 
-<a name="w1"></a>
+<a name="w2"></a>
 ## Week Two
+TODO
