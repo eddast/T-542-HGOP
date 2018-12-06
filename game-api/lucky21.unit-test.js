@@ -20,7 +20,7 @@ const initializeLucky21Game = () => {
     'dealer': dealerConstructor,
     'random': randomConstructor(),
   };
-  return lucky21Constructor((name) => dependencies[name]);
+  return lucky21Constructor((name) => dependencies[name])
 };
 /**
 * Initialize known test environment
@@ -87,7 +87,6 @@ describe('isGameOver functionality', () => {
     game.state.cards = [ '01H', '04H' ];
     expect(game.isGameOver(game)).toEqual(false);
     game.guess21OrUnder(game);
-    console.log(game.getTotal(game));
     expect(game.isGameOver(game)).toEqual(false);
   });
 });
@@ -99,6 +98,7 @@ describe('playerWon functionality', () => {
     game.state.cards = ['01H', '12H', '09H'];
     expect(game.playerWon(game)).toEqual(false);
     game.guessOver21(game);
+
     expect(game.playerWon(game)).toEqual(true);
   });
   test('playerWon player does not win after guessing under 21 when cards array is 10 and next card is 3', () => {

@@ -166,7 +166,7 @@ module.exports = (context) => {
          * @param game the game along with game state
          */
         guess21OrUnder: game => {
-            const nextCard = dealer.draw(deck);
+            const nextCard = dealer.draw(game.state.deck);
             game.state.card = undefined;
             game.state.cards.push(nextCard);
         },
@@ -176,7 +176,7 @@ module.exports = (context) => {
          * @param game the game along with game state
          */
         guessOver21: game => {
-            const nextCard = dealer.draw(deck);
+            const nextCard = dealer.draw(game.state.deck);
             game.state.card = nextCard;
         },
         /**
