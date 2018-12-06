@@ -5,6 +5,8 @@ Course repository for the Quality Assurance Course at Reykjavík University fall
 - [Week One](#w1)
   * [The Running Instance of the API](#w1-running-instance)
   * [Implementation Details Explained](#w1-implementation-details)
+  
+- [Week Two](#w2)
 
 <a name="w1"></a>
 ## Week One
@@ -73,3 +75,6 @@ setTimeout(() =>
 
  This was consulted with lab instructor (Hrafn Orri Hrafnkelsson) who ensured that having this workaround in the code was OK and to keep the time-out function in the code as is.
 
+<a name="w2"></a>
+## Week Two
+TODO
