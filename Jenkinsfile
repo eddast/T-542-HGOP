@@ -35,5 +35,5 @@ node {
         sh "cd game-api/ && npm run test:unit"
     }
     /* Deployment job from free style Jenkins job */
-    build job: 'gameAPI-deployment', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: git.GIT_COMMIT]]
+    build job: 'gameAPI-deployment', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
 }
