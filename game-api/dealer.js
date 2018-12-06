@@ -5,15 +5,16 @@
   *     Drawing card from game deck
   * @return object containing shuffle and draw functions
   */
- module.exports = () => {
+ module.exports = (context) => {
     return {
         /**
          * Shuffles the given deck
          * @param {string[]} deck to shuffle
          */
         shuffle: deck => {
+            const random = context('random'); // provides functionality to get random integer
             for (let i = 0; i < deck.length - 1; i++) {
-                const j = Math.floor(Math.random() * (deck.length - i)) + i;
+                const j = random.randomInt(i, deck.length);
                 const card = deck[j];
                 const old = deck[i];
                 deck[i] = card;

@@ -1,6 +1,6 @@
  /**
  * The representation of a card deck for lucky21 game
- * represents cards in a deck in the form of a string array
+ * represents cards in a deck in the form of a string array in a normal deck
  * @return {string[]} string values corresponding to all cards in cards deck
  */
 module.exports = () => {

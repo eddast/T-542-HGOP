@@ -1,66 +1,75 @@
-const { Client } = require('pg');
+module.exports = function(context) {
+    
+    const Client = context('pgClient');
+    const configConstructor = context('config');
+    const config = configConstructor(context);
+    console.log(config);
 
-// export available database functions.
-module.exports = {
-    insertItem: (name, insertDate, onInsert) => {
-        var client = getClient();
-        client.connect(() => {
-            const query = {
-                text: 'INSERT INTO Item(Name, InsertDate) VALUES($1, $2);',
-                values: [name, insertDate],
-            };
-            client.query(query, (err, res) => {
-                onInsert();
-                client.end();
-            });
+    function getClient() {
+        return new Client({
+            host: config.pgHost,
+            user: config.pgUser,
+            password: config.pgPassword,
+            database: config.pgDatabase,
         });
-        return;
-    },
-    getItems: onGet => {
-        var client = getClient();
-        client.connect(() => {
-            const query = {
-                text: 'SELECT ID, Name, InsertDate FROM Item ORDER BY InsertDate DESC LIMIT 10;',
-                rowMode: 'array'
-            };
-            client.query(query, (err, res) => {
-                onGet(res.rows.map(row => {
-                    return {
-                        id: row[0],
-                        name: row[1],
-                        insertdate: row[2]
-                    };
-                }));
-                client.end();
-            });
-        });
-        return;
     }
-};
 
-function getClient() {
-    return new Client({
-        host: "item_db_container",
-        user: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DB
-    });
-}
-
-var client = getClient();
-// NOTE: I was having problems with concurrency, apparently "depends_on" in docker-compose did not always function as should
-// Added the following time out function as workaround to wait for postgres to start before client connects
-// Consulted this with lab instructor, he said this was OK and he said to keep the time out function here as is
-setTimeout(() =>
+    let client = getClient();
+    setTimeout(() =>
     client.connect((err) => {
-        if (err) console.log('failed to connect to postgres!');
-        else {
+        if (err) {
+            console.log('failed to connect to postgres!');
+        } else {
             console.log('successfully connected to postgres!');
-            client.query('CREATE TABLE IF NOT EXISTS Item (ID SERIAL PRIMARY KEY, Name VARCHAR(32) NOT NULL, InsertDate TIMESTAMP NOT NULL);', (err) => {
-                if (err) console.log('error creating Item table!');
-                else console.log('successfully created item table!');
+            client.query('CREATE TABLE IF NOT EXISTS GameResult (ID SERIAL PRIMARY KEY, Won BOOL NOT NULL, Score INT NOT NULL, Total INT NOT NULL, InsertDate TIMESTAMP NOT NULL);', (err) => {
+                if (err) {
+                    console.log('error creating game result table!')
+                } else {
+                    console.log('successfully created game result table!')
+                }
                 client.end();
             });
         }
-    }),
-2000);
+    }), 2000);
+
+    return {
+        insertResult: (won, score, total, onSuccess, onError) => {
+            let client = getClient();
+            client.connect((err) => {
+                if (err) {
+                    onError(err);
+                    client.end();
+                } else {
+                    const query = {
+                        text: 'INSERT INTO History(Won, Score, Total, InsertedDate) VALUES($1, $2, $3, CURRENT_TIMESTAMP);',
+                        values: [won, score, total],
+                    }
+                    client.query(query, (err) => {
+                        if (err) {
+                            onError();
+                        } else {
+                            onSuccess();
+                        }
+                        client.end();
+                    });
+                }
+            });
+            return;
+        },
+        // Should call onSuccess with integer.
+        getTotalNumberOfGames: (onSuccess, onError) => {
+            onSuccess(0)
+            // TODO week 3
+        },
+        // Should call onSuccess with integer.
+        getTotalNumberOfWins: (onSuccess, onError) => {
+            onSuccess(0)
+            // TODO week 3
+        },
+        // Should call onSuccess with integer.
+        getTotalNumberOf21: (onSuccess, onError) => {
+            onSuccess(0)
+            // TODO week 3
+        },
+    }
+}

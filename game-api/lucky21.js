@@ -44,7 +44,15 @@ const cardIsRoyal = cardVal => cardVal > 10;
  * @param {string[]} deck represents cards in a deck in a string array
  * @param {*} dealer the functionality of a dealer: provides suffle and draw a card functionalities
  */
-module.exports = (deck, dealer) => {
+module.exports = (context) => {
+    /**
+     * Get deck and dealer from context file
+     */
+    let deckConstructor = context('deck');
+    let deck = deckConstructor(context);
+    let dealerConstructor = context('dealer');
+    let dealer = dealerConstructor(context);
+
     return {
         /**
          * The game state object
@@ -171,5 +179,14 @@ module.exports = (deck, dealer) => {
             const nextCard = dealer.draw(deck);
             game.state.card = nextCard;
         },
+        /**
+         * Returns the state of the game
+         */
+        getState: game => {
+            return {
+                cards: game.state.cards,
+                card: game.state.card
+            }
+        }
     };
 };

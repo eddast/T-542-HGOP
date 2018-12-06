@@ -8,6 +8,8 @@ services:
     depends_on:
     - item_db_container
     environment:
+      PORT: 3000
+      POSTGRES_HOST: 'item_db_container'
       POSTGRES_DB: 'item_db'
       POSTGRES_USER: 'root'
       POSTGRES_PASSWORD: 'root123'
