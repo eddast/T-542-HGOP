@@ -29,7 +29,5 @@ if [ ! -f "docker-compose.yml" ]; then
     exit 1
 fi
 
-sudo cat docker-compose.yml
 echo 'Starting the API'
-echo 'Fails here'
 sudo docker-compose up -d
