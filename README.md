@@ -1,5 +1,5 @@
 # T-542-HGOP: Hagnýt Gæðastjórnun og Prófanir
-Course repository for the Quality Assurance Course at Reykjavík University fall 2018 owned by Edda Steinunn Rúnarsdóttir, kt. 241095-2909. The repostiory contains all code and files as well as commit history relevant created throughout the three week period of the course. Any details that need to be documented or further clarified and/or explained for assignments delivered are attempted to be listed in the following file. 
+Course repository for the Quality Assurance Course at Reykjavík University fall 2018 owned by Edda Steinunn Rúnarsdóttir, kt. 241095-2909. The repository contains all code and files as well as commit history relevant created throughout the three week period of the course. Any details that need to be documented or further clarified and/or explained for assignments delivered are attempted to be listed in the following file. 
 
 ## Overview
 - [Week One](#w1)
