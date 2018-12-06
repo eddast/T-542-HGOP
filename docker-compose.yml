@@ -2,7 +2,7 @@ version: '3'
 services:
   # Item repository image (the API)
   my_item_repository:
-    image: eddast/hgop:${TAG}
+    image: eddast/hgop:${GIT_COMMIT}
     ports:
     - '3000:3000'
     depends_on:
