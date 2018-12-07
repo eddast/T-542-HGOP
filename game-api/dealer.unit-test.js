@@ -4,11 +4,11 @@
  */
 function newRandom(randomReturnValues) {
     let i = 0;
-    return {
+    return () => ({
         randomInt: (min, max) => {
             return randomReturnValues[i++];
         }
-    };
+    });
 }
 /**
  * Test if dealer shuffles based on dependencies given
@@ -47,7 +47,7 @@ describe('dealer shuffle functionality', () => {
      * Test if dealer returns empty deck if an empty deck is shuffled
      */
     test('shuffle yields empty deck on shuffle when initial deck is empty', () => {
-        let dependencies = { 'random': { randomInt: () => 0 }};
+        let dependencies = { 'random': () => ({ randomInt: () => 0 }) };
         let newDealer = require('./dealer.js');
         let dealer = newDealer((name) => dependencies[name]);
         let deck = [ ];

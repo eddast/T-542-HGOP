@@ -18,7 +18,7 @@ const initializeLucky21Game = () => {
   let dependencies = {
     'deck': deckConstructor,
     'dealer': dealerConstructor,
-    'random': randomConstructor(),
+    'random': randomConstructor,
   };
   return lucky21Constructor((name) => dependencies[name]);
 };
@@ -36,7 +36,7 @@ const initializeGameWithDeckSubsetAndNoShuffle = () => {
   let dependencies = {
     'deck': () => ['05L', '01D', '09S', '10H'],
     'dealer': dealerNoShuffleConstructor,
-    'random': randomConstructor(),
+    'random': randomConstructor,
   };
   return lucky21Constructor((name) => dependencies[name]);
 };
