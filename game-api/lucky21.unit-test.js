@@ -150,10 +150,10 @@ describe('getCardValue functionality', () => {
       expect(game.getCardValue(game)).toEqual(10);
     }
   });
-  test('getCardValue returns 11 if card is ace', () => {
+  test('getCardValue returns 1 if card is ace', () => {
     const game = initializeLucky21Game();
     game.state.card = '01H';                      // set card to ace
-    expect(game.getCardValue(game)).toEqual(11);  // should equal 11
+    expect(game.getCardValue(game)).toEqual(1);  // should equal 11
   });
 });
 
@@ -171,11 +171,11 @@ describe('getTotal functionality', () => {
     game.state.card = undefined;
     expect(game.getTotal(game)).toEqual(9);
   });
-  test('getTotal returns 31 given cards ace, Queen and 9 and ace as card', () => {
+  test('getTotal returns 20 given cards ace, Queen and 9 and ace as card', () => {
     const game = initializeLucky21Game();
     game.state.cards = ['01H', '12H', '09H'];
     game.state.card = '01C';
-    expect(game.getTotal(game)).toEqual(31);
+    expect(game.getTotal(game)).toEqual(21);
   });
 });
 

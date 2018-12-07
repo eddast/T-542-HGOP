@@ -135,7 +135,7 @@ module.exports = (context) => {
             // Extract value of card (1-13)
             const cardValue = parseInt(card.substring(0,2));
             if (cardIsRoyal(cardValue)) return 10; 
-            if (cardIsAce(cardValue))   return 11;
+            if (cardIsAce(cardValue))   return 1;
             return cardValue;
         },
         /**
