@@ -1,3 +1,9 @@
+# Adds environment variable for identifying deployment to
+# production vs non-production environments
+variable "environment" {
+  type = "string"
+}
+
 # PROVIDERS expose resources and understand API interactions of various providers.
 # Here, location of AWS credential file and region specification are exposed as resource so that
 # terraform can connect to AWS user associated with credential file and use correct region for instances
@@ -10,7 +16,7 @@ provider "aws" {
 # This declares aws_security_group as TYPE of resource and "game_security_group" as NAME of resource and defines a security group in AWS
 # Within the block, configuration variables are defined for the resource which are inbound and outbound traffic allowed for security group
 resource "aws_security_group" "game_security_group" {
-  name   = "GameSecurityGroup"
+  name   = "GameSecurityGroup_${var.environment}"
 
   ingress {
     from_port   = 22
@@ -42,7 +48,7 @@ resource "aws_instance" "game_server" {
   key_name               = "GameKeyPair"
   vpc_security_group_ids = ["${aws_security_group.game_security_group.id}"]
   tags {
-    Name = "GameServer"
+    Name = "GameServer_${var.environment}"
   }
   
   # FILE PROVISIONER is used to copy file from local machine to new remote AWS instance created
