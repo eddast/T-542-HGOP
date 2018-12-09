@@ -8,7 +8,7 @@
     "test:unit": "jest --config jest-unit.config.js --coverage",
     "test:api": "jest --config jest-api.config.js",
     "test:capacity": "jest --config jest-capacity.config.js",
-    "eslint": "eslint \"**/*.js\" --ignore-pattern '/node_modules/'"
+    "eslint": "eslint \"**/*.js\" --ignore-pattern '/node_modules/' --ignore-pattern '/coverage/'"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "eslint": "^5.9.0",
-    "eslint-config-google": "^0.11.0",
     "jest": "^23.6.0",
     "request": "^2.88.0"
   }
