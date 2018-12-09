@@ -35,6 +35,7 @@ msbuild.wrn
 bin/
 obj/
 node_modules/
+coverage/
 
 # Visual Studio 2015
 .vs/
