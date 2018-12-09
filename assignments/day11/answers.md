@@ -1,6 +1,6 @@
 # T-542-HGOP: Day Eleven
 
-## **Q:** Consider below code from server.js. Explain why we put each consecutive call inside the onSuccess callback of the previous database call, instead of just placing them next to each other:
+## 1. **Q:** Consider below code from server.js. Explain why we put each consecutive call inside the onSuccess callback of the previous database call, instead of just placing them next to each other:
 (Snip from server.js):
 ```javascript
 app.post('/stats', (req, res) => {
