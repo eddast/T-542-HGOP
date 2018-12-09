@@ -33,6 +33,15 @@ node {
     */
     stage("Test") {
         sh "cd game-api/ && npm run test:unit"
+        // Use Clover plugin to output coverage results in Jenkins
+        step([
+            $class: 'CloverPublisher',
+            cloverReportDir: 'coverage',
+            cloverReportFileName: 'clover.xml',
+            healthyTarget: [methodCoverage: 80, conditionalCoverage: 80, statementCoverage: 80],
+            unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
+            failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
+        ])
     }
     /* Deployment job from free style Jenkins job */
     build job: 'gameAPI-deployment', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
