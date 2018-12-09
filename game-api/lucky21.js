@@ -185,7 +185,11 @@ module.exports = (context) => {
         getState: game => {
             return {
                 cards: game.state.cards,
-                card: game.state.card
+                cardsValue: game.getCardsValue(game),
+                card: game.state.card,
+                cardValue: game.getCardValue(game),
+                total: game.getTotal(game),
+                gameOver: game.isGameOver(game),
             };
         }
     };
