@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:unit": "jest --config jest-unit.config.js --coverage",
     "test:api": "jest --config jest-api.config.js",
+    "test:capacity": "jest --config jest-capacity.config.js",
     "eslint": "eslint \"**/*.js\" --ignore-pattern '/node_modules/'"
   },
   "author": "",
