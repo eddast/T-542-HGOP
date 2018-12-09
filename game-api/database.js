@@ -64,7 +64,8 @@ module.exports = function(context) {
             }
         });
         return;
-    }
+    };
+    
     return {
         /**
          * Inserts game result into postgres database
