@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:unit": "jest --config jest.config.js --coverage",
+    "test:unit": "jest --config jest-unit.config.js --coverage",
+    "test:api": "jest --config jest-api.config.js",
     "eslint": "eslint \"**/*.js\" --ignore-pattern '/node_modules/'"
   },
   "author": "",
@@ -15,8 +16,9 @@
     "pg": "^7.6.1"
   },
   "devDependencies": {
-    "jest": "^23.6.0",
     "eslint": "^5.9.0",
-    "eslint-config-google": "^0.11.0"
+    "eslint-config-google": "^0.11.0",
+    "jest": "^23.6.0",
+    "request": "^2.88.0"
   }
 }
