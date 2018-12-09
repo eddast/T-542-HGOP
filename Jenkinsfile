@@ -43,6 +43,18 @@ node {
             failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]
         ])
     }
+
+    /* API Test job from free style Jenkins job
+     * Conducts api tests in a new deployed instance then destroys instance
+     */
+    build job: 'gameAPI-api-test', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
+
+    /* Capacity Test job from free style Jenkins job
+     * Conducts api tests in a new deployed instance then destroys instance
+     */
+    build job: 'gameAPI-capacity-test', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
+
+
     /* Deployment job from free style Jenkins job */
     build job: 'gameAPI-deployment', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
 }
