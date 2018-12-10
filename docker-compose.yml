@@ -6,17 +6,17 @@ services:
     ports:
     - '3000:3000'
     depends_on:
-    - item_db_container
+    - game_database_container
     environment:
       PORT: 3000
-      POSTGRES_HOST: 'item_db_container'
-      POSTGRES_DB: 'item_db'
+      POSTGRES_HOST: 'game_database_container'
+      POSTGRES_DB: 'game_database'
       POSTGRES_USER: 'root'
       POSTGRES_PASSWORD: 'root123'
   # Postgres image to achieve functionality of API
-  item_db_container:
+  game_database_container:
     image: postgres
     environment:
-      POSTGRES_DB: 'item_db'
+      POSTGRES_DB: 'game_database'
       POSTGRES_USER: 'root'
       POSTGRES_PASSWORD: 'root123'

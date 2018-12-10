@@ -8,11 +8,14 @@
     "test:unit": "jest --config jest-unit.config.js --coverage",
     "test:api": "jest --config jest-api.config.js",
     "test:capacity": "jest --config jest-capacity.config.js",
+    "migratedb:pg": "db-migrate --verbose --env pg --config ./database.json --migrations-dir ./migrations up",
     "eslint": "eslint \"**/*.js\" --ignore-pattern '/node_modules/' --ignore-pattern '/coverage/'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "db-migrate": "^0.11.4",
+    "db-migrate-pg": "^0.4.0",
     "express": "^4.16.2",
     "pg": "^7.6.1"
   },

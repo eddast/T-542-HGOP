@@ -14,4 +14,5 @@ RUN npm install --production
 
 # Start application within container using nodeJS image
 # (There can only be one CMD per Dockerfile, used specifically to run application) 
-CMD node app.js
+# Sleep to give postgres time to setup before we try to migrate.
+CMD sleep 5 && npm run migratedb:pg && node app.js

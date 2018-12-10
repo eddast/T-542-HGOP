@@ -27,14 +27,7 @@ module.exports = function(context) {
     setTimeout(() =>
         client.connect((err) => {
             if (err) console.log('failed to connect to postgres!');
-            else {
-                console.log('successfully connected to postgres!');
-                client.query('CREATE TABLE IF NOT EXISTS GameResult (ID SERIAL PRIMARY KEY, Won BOOL NOT NULL, Score INT NOT NULL, Total INT NOT NULL, InsertDate TIMESTAMP NOT NULL);', (err) => {
-                    if (err)    console.log('error creating game result table!');
-                    else        console.log('successfully created game result table!');
-                    client.end();
-                });
-            }
+            else console.log('successfully connected to postgres!');
     }), 2000);
     /**
      * Helper function: gets the count of rows with some condition from GameResult table
@@ -54,7 +47,7 @@ module.exports = function(context) {
             // Perform row count query with condition and call success function
             } else {
                 const query = {
-                    text: `SELECT COUNT(*) FROM GameResult ${ byCondition ? byCondition : '' };`
+                    text: `SELECT COUNT(*) FROM "GameResult" ${ byCondition ? byCondition : '' };`
                 };
                 client.query(query, (err, res) => {
                     if (err)    onError();
@@ -83,7 +76,7 @@ module.exports = function(context) {
                     client.end();
                 } else {
                     const query = {
-                        text: 'INSERT INTO GameResult(Won, Score, Total, InsertDate) VALUES($1, $2, $3, CURRENT_TIMESTAMP);',
+                        text: 'INSERT INTO "GameResult"("Won", "Score", "Total", "InsertDate") VALUES($1, $2, $3, CURRENT_TIMESTAMP);',
                         values: [won, score, total],
                     };
                     client.query(query, (err) => {
@@ -110,7 +103,7 @@ module.exports = function(context) {
          * @param {function} onError function called on unsuccessful query to the postgres database
          */
         getTotalNumberOfWins: (onSuccess, onError) =>
-            getCountOfGameResult('WHERE Won=true', onSuccess, onError),
+            getCountOfGameResult('WHERE "Won"=true', onSuccess, onError),
 
         /**
          * Gets the total number of games won where the final score was 21
@@ -118,6 +111,6 @@ module.exports = function(context) {
          * @param {function} onError function called on unsuccessful query to the postgres database
          */
         getTotalNumberOf21: (onSuccess, onError) => 
-            getCountOfGameResult('WHERE Score=21', onSuccess, onError),
+            getCountOfGameResult('WHERE "Score"=21', onSuccess, onError),
     };
 };
