@@ -19,7 +19,7 @@ module.exports = function(context) {
     let game = undefined;
 
     // Starts a new game.
-    app.post('/stats', (req, res) => {
+    app.get('/stats', (req, res) => {
         database.getTotalNumberOfGames((totalNumberOfGames) => {
             database.getTotalNumberOfWins((totalNumberOfWins) => {
                 database.getTotalNumberOf21((totalNumberOf21) => {
