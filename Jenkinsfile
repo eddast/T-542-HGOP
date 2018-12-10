@@ -50,7 +50,7 @@ node {
     build job: 'gameAPI-api-test', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
 
     /* Capacity Test job from free style Jenkins job
-     * Conducts api tests in a new deployed instance then destroys instance
+     * Conducts capacity tests in a new deployed instance then destroys instance
      */
     build job: 'gameAPI-capacity-test', parameters: [[$class: 'StringParameterValue', name: 'GIT_COMMIT', value: "${git.GIT_COMMIT}"]]
 
