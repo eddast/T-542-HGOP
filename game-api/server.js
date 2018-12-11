@@ -8,8 +8,12 @@ module.exports = function(context) {
     const configConstructor = context('config');
     const config = configConstructor(context);
     const lucky21Constructor = context("lucky21");
-
     let app = express();
+    
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        next();
+    });
 
     app.get('/status', (req, res) => {
         res.statusCode = 200;

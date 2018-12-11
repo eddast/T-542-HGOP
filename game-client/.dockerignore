@@ -1,0 +1,3 @@
+# Docker ignores the following files when copying files to docker image
+./Dockerfile
+./node_modules

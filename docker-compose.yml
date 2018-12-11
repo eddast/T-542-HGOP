@@ -1,7 +1,18 @@
 version: '3'
 services:
+  # The UI - game client
+  game_client:
+    image: eddast/hgop:game-client
+    ports:
+    - '4000:4000'
+    depends_on:
+    - game_api
+    environment:
+      PORT: 4000
+      API_PORT: 3000
+      API_URL: ${API_URL}
   # Item repository image (the API)
-  my_item_repository:
+  game_api:
     image: eddast/hgop:${GIT_COMMIT}
     ports:
     - '3000:3000'
