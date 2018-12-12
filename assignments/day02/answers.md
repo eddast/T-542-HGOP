@@ -35,7 +35,7 @@ A light-weight external client for JavaScript installed via npm that is used for
 **A:** A external npm client for JavaScript for communicating with PostgreSQL that supports postgres specific SQL extensions.
 
 ## 9. **Q:** What is docker-compose?
-**A:** A Docker tool that enables running multiple Docker components in parallel, thus making it easier to deploy multi-container projects. To run multi-container project via docker compose, the application’s services are defined in a .yaml file which when run creates and starts all services in parallel using that configuration.
+**A:** A Docker tool that helps us orchestrate our docker containers when running multiple Docker components in parallel, thus making it easier to deploy multi-container projects. To run multi-container project via docker compose, the application’s services are defined in a .yaml file which when run creates and starts all services in parallel and orchestrates their run using that configuration.
 
 ## 10. **Q:** What are the results of this exercise?
 **A:** After this exercise I have learnt how to use Docker to create, run and deploy single-container applications that can run on any computer. I have also learnt how to create and run multi-container application with Docker compose by running a Web API container and a Postgres container simultaneously whose application's functionality is formed by the communication between the two containers.

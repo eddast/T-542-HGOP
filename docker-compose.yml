@@ -37,6 +37,7 @@ services:
       POSTGRES_DB: 'game_database'
       POSTGRES_USER: 'root'
       POSTGRES_PASSWORD: 'root123'
+      ENVIRONMENT: ${ENVIRONMENT}
   # Postgres image to achieve functionality of API
   game_database_container:
     image: postgres
