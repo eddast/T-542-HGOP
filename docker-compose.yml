@@ -1,8 +1,21 @@
 version: '3'
 services:
+  # Data Dog monitoring system
+  # Based on https://github.com/DataDog/docker-compose-example
+  my_datadog_container:
+    image: datadog/agent:latest
+    links:
+      - game_api
+    environment:
+      - DD_API_KEY=a9ec8ca92f316d3efa77dbfa1d4e0358
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
   # The UI - game client
   game_client:
-    image: eddast/hgop:game-client
+    image: eddast/hgop:game-client-${GIT_COMMIT}
     ports:
     - '4000:4000'
     depends_on:
@@ -13,7 +26,7 @@ services:
       API_URL: ${API_URL}
   # Item repository image (the API)
   game_api:
-    image: eddast/hgop:${GIT_COMMIT}
+    image: eddast/hgop:game-api-${GIT_COMMIT}
     ports:
     - '3000:3000'
     depends_on:
