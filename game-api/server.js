@@ -8,6 +8,8 @@ module.exports = function(context) {
     const configConstructor = context('config');
     const config = configConstructor(context);
     const lucky21Constructor = context("lucky21");
+    const hotshotsClientConstructor = context('hsClient');
+    const hsClient = hotshotsClientConstructor(context);
     let app = express();
     
     app.use((req, res, next) => {
@@ -60,6 +62,7 @@ module.exports = function(context) {
             const msg = 'Game started';
             res.statusCode = 201;
             res.send(msg);
+            hsClient.increment('games.started');
         }
     });
 
