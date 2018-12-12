@@ -4,5 +4,5 @@
  */
 module.exports = (context) => {
     const HotShots = context("hotshots");
-    return HotShots('my_datadog_container').bind(this);
+    return HotShots('my_datadog_container');
 };
