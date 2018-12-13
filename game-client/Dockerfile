@@ -19,5 +19,8 @@ RUN yarn install
 # Note that copy command omits the files specified in .dockerignore file
 COPY . .
 
+# Make the directory if it doesn't exist
+RUN mkdir -p dist
+
 # Start up frontend using npm
 CMD ["yarn", "start"]
