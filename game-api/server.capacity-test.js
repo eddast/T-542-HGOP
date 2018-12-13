@@ -1,6 +1,6 @@
 const helper = require('./server.lib-test.js');
-const timeout = 300000;
-const gameCount = 10000;
+const timeout = 30000;
+const gameCount = 10;
 
 /**
  * Plays <count> games of lucky21 using api test set up
