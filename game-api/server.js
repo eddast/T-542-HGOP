@@ -91,6 +91,8 @@ module.exports = function(context) {
                     const won = game.playerWon(game);
                     const score = game.getCardsValue(game);
                     const total = game.getTotal(game);
+                    if (won) hsClient.increment("games.won");
+                    else hsClient.increment("games.lost");
                     database.insertResult(won, score, total, () => {
                         console.log('Game result inserted to database');
                     }, (err) => {
