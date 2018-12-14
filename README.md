@@ -280,7 +280,7 @@ Game API running at  + 35.173.179.24
 
 In this case, as per the output the public ip address of the running GameAPI instance is 35.173.179.24 (this of course is not the case anymore as when any changes are pushed into the current git repository, a new instance is formed with new public IP). This public IP can then be used to access with my running instance of the Lucky21 game.
 
-To verify my application instance is up and running, one can for example navigate to the public IP address and to port 4000, http://<publicIP>:4000/ and enjoy a game of Lucky21 (where the publicIP denotes the current public ip of the running instance) or query the game API on port 3000 with same routes as mentioned in  [Week Two](#w2) section's [The Running Instance of the API](#w2-running-instance).
+To verify my application instance is up and running, one can for example navigate to the public IP address and to port 4000, http://publicIP:4000/ and enjoy a game of Lucky21 (where the publicIP denotes the current public ip of the running instance) or query the game API on port 3000 with same routes as mentioned in  [Week Two](#w2) section's [The Running Instance of the API](#w2-running-instance).
 
 <a name="w3-datadog-dashboard"></a>
 ### The DataDog Dashboard
