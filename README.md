@@ -9,8 +9,8 @@ Course repository for the Quality Assurance Course at Reykjavík University fall
 - [Week Two](#w2)
   * [The Running Jenkins Instance](#w2-jenkins-instance)
   * [The Running Instance of the API](#w2-running-instance)
-  
-  - [Week Three](#w3)
+
+- [Week Three](#w3)
   * [The Running Jenkins Instance](#w3-jenkins-instance)
   * [The Running Instance of the Lucky21 Game](#w3-running-instance)
   * [The DataDog Dashboard](#w3-datadog-dashboard)
@@ -295,6 +295,6 @@ The URL to the DataDog dashboard of the project is: https://p.datadoghq.com/sb/a
 * Games lost in production
 
 Following is a screenshot of the DataDog monitoring dashboard of this project:
-https://github.com/eddast/T-542-HGOP/blob/master/DataDogDashboard.png "DataDog Dashboard for T-542-HGOP by @eddast"
+![alt text](https://github.com/eddast/T-542-HGOP/blob/master/DataDogDashboard.png "DataDog Dashboard for T-542-HGOP by @eddast")
 
 
