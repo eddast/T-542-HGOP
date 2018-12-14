@@ -9,6 +9,11 @@ Course repository for the Quality Assurance Course at Reykjavík University fall
 - [Week Two](#w2)
   * [The Running Jenkins Instance](#w2-jenkins-instance)
   * [The Running Instance of the API](#w2-running-instance)
+  
+  - [Week Three](#w3)
+  * [The Running Jenkins Instance](#w3-jenkins-instance)
+  * [The Running Instance of the Lucky21 Game](#w3-running-instance)
+  * [The DataDog Dashboard](#w3-datadog-dashboard)
 
 <a name="w1"></a>
 ## Week One
@@ -117,12 +122,12 @@ At the due date for application in the second week (7.12.2018) the following is 
 │   ├── docker_build.sh
 │   ├── docker_push.sh
 │   ├── sync_session.sh
-│   └── deploy.sh
+│   ├── deploy.sh
 │   └── utils.sh*
 ├── docker-compose.yml
 ├── infrastructure.tf
 ├── Jenkinsfile
-└── aboutme.md
+├── aboutme.md
 └── README.md
 ```
 
@@ -151,8 +156,6 @@ public_ip = 35.173.179.24[0m
 + terraform output public_ip
 + echo Game API running at  + 35.173.179.24
 Game API running at  + 35.173.179.24
-+ terraform output public_ip
-+ ssh -o StrictHostKeyChecking=no -i ~/.aws/GameKeyPair.pem ubuntu@35.173.179.24 ./initialize_game_api_instance.sh
 ........
 ```
 
@@ -169,3 +172,129 @@ $ curl -X POST <publicIP>:3000/start
 $ curl -X POST <publicIP>:3000/guess21OrUnder
 $ curl -X POST <publicIP>:3000/guessOver21
 ```
+
+<a name="w3"></a>
+## Week Three
+At the final due date for application (14.12.2018), the following is an overview of the folder structure and files that are up on the master branch (deviations are marked with '*' and explained below).
+
+```bash
+├── game-api
+│   ├── migrations
+│   │   ├── 20181210194527-GameResultTable.js
+│   │   └── 20181210200523-GameResultTableAddInsertDate.js
+│   ├── .eslintrc.json
+│   ├── app.js
+│   ├── server.js
+│   ├── server.lib-test.js
+│   ├── server.api-test.js
+│   ├── server.capacity-test.js
+│   ├── config.js
+│   ├── random.js
+│   ├── random.unit-test.js
+│   ├── deck.js
+│   ├── deck.unit-test.js
+│   ├── dealer.js
+│   ├── dealer.unit-test.js
+│   ├── lucky21.js
+│   ├── lucky21.unit-test.js
+│   ├── inject.js
+│   ├── context.js
+│   ├── database.js
+│   ├── database.json
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── .dockerignore*
+│   ├── package-lock.json*
+│   ├── hotshots.js*
+│   ├── jest.api.config.js*
+│   ├── jest.unit.config.js*
+│   ├── jest.capacity.config.js*
+│   ├── database.unit-test.js*
+├── game-client
+│   │   ├── App.js
+│   │   └── utils.js
+│   ├── Dockerfile
+│   └── index.js
+│   └── (more files)
+├── assignments
+│   ├── day01
+│   │   └── answers.md
+│   ├── day02
+│   │   └── answers.md
+│   └── day11
+│       └── answers.md
+├── scripts
+│   ├── initialize_game_api_instance.sh
+│   ├── verify_environment.sh
+│   ├── docker_compose_up.sh
+│   ├── docker_build.sh
+│   ├── docker_push.sh
+│   ├── sync_session.sh
+│   ├── deploy.sh
+│   └── utils.sh*
+├── DataDogDashboard.png
+├── docker-compose.yml
+├── infrastructure.tf
+├── Jenkinsfile
+├── aboutme.md
+└── README.md
+```
+
+For explanation on the presence of **_package-lock.json_** and **_.dockerignore_** files, refer to section [Week Two](#w2) and for explanation **_utils.sh_** script file under scripts, refer to section [The Verify Script and the Addition of utils.sh* Script](#w1-verify-utils).
+
+The test configuration files **_jest.unit.config.js_** (was renamed from jest.config.js to jest.unit.config.js from week 2), **_jest.api.config.js_** and **_jest.capacity.config.js_** are present although not specified in assignment description for the purpose of seperating test configurations from package.json file for better extensibility on test configuration. This was consulted with lab instructor which said this was OK.
+
+The unit test file **_database.unit-test.js_** is present although not specified in assignment description as a personal unit test practise, it merely initializes dummy context, tests for correct callback values and is kept in repository for for the sake of a tad better code coverage for the Jenkins code coverage report for the test stage.
+
+the **_hotshot.js_** file is present although not specified in assignment description for the purpose of code consistency as other iniitialization modules that use the dependency injection method used throughout the project (e.g. injecting context) are generally initialized in their own file. It's purpose is simply to initialize a hotshot client.
+
+<a name="w3-jenkins-instance"></a>
+### The Running Jenkins Instance
+The main URL to my running Jenkins Instance which currently manages and audits the deployment pipeline of this repository is http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/. The following are relevant URLs to all jobs within the Jenkins dashboard:
+
+* The main pipeline of repository and project: http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/job/HGOP-2018-pipeline/
+* API test job of pipeline: http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/job/gameAPI-api-test/
+* Capacity test job of pipeline: http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/job/gameAPI-capacity-test/
+* Deployment job of pipeline: http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/job/gameAPI-deployment/
+
+Note that these links are not accessible without having been authorized to the Jenkins Dashboard and for that you need to have a username and password to the Jenkins instance. _Lab instructors should were been provided with their user names and passwords to access this Jenkins instance through submission comment when this repository URL was handed in to Canvas_.
+
+**NOTE:** If you are relevant to the management of the course T-542-HGOP and you require a user access to the Jenkins instance as well for grading purposes or otherwise, please specify your reasons and contact the author of this repository via email: eddasr15@ru.is to request a user to the Jenkins instance.
+
+<a name="w3-running-instance"></a>
+### The Running Instance of the Lucky21 Game
+The running instance of the API is up at a public IP address that can be found in the **console output of the latest build of the Jenkins deploy job, which can be viewed from the Jenkins Dashboard** at URL http://ec2-54-159-65-134.compute-1.amazonaws.com:8080/job/gameAPI-deployment/{latest-job-ID}/console (where the latest-job-ID denotes the ID number of the latest deployment job). Again, to view this you need to have a username and password to the Jenkins Dashboard. An example output from the console is for example the following:
+
+```bash
+........
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.[0m
+[0m[1m[32m
+Outputs:
+
+public_ip = 35.173.179.24[0m
++ terraform output public_ip
++ echo Game API running at  + 35.173.179.24
+Game API running at  + 35.173.179.24
+........
+```
+
+In this case, as per the output the public ip address of the running GameAPI instance is 35.173.179.24 (this of course is not the case anymore as when any changes are pushed into the current git repository, a new instance is formed with new public IP). This public IP can then be used to access with my running instance of the Lucky21 game.
+
+To verify my application instance is up and running, one can for example navigate to the public IP address and to port 4000, http://<publicIP>:4000/ and enjoy a game of Lucky21 (where the publicIP denotes the current public ip of the running instance) or query the game API on port 3000 with same routes as mentioned in  [Week Two](#w2) section's [The Running Instance of the API](#w2-running-instance).
+
+<a name="w3-datadog-dashboard"></a>
+### The DataDog Dashboard
+The URL to the DataDog dashboard of the project is: https://p.datadoghq.com/sb/ac5becabc-abef54a9c80d6516c7ce6ba0efdc7c1a. The DataDog Dashboard of this project is a screenboard and shows statistics and monitoring results of the following metrics:
+
+* Games started in production
+* Running Production containers
+* Memory Usage
+*  CPU Usage
+* Cache usage in production
+* Games won in production
+* Games lost in production
+
+Following is a screenshot of the DataDog monitoring dashboard of this project:
+https://github.com/eddast/T-542-HGOP/blob/master/DataDogDashboard.png "DataDog Dashboard for T-542-HGOP by @eddast"
+
+
